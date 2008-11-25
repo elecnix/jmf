@@ -1,0 +1,14 @@
+#
+# @(#)win32_libvfw.cmk	1.1 98/08/07
+#
+
+SOURCES_c = \
+	$(OBJDIR)\acm.c
+
+STUBS_NAMES = \
+	com.ibm.media.codec.audio.ACMCodec
+
+STUBS_CLASSES = \
+	$(TARGDIR)com/ibm/media/codec/audio/ACMCodec.class
+
+

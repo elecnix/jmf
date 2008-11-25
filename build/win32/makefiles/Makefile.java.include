@@ -1,0 +1,66 @@
+#
+# @(#)Makefile.java.include	1.1 98/06/24
+# Copyright 1998 Sun Microsystems, Inc.
+#
+
+include $(TOPDIR)/build/$(PLATFORM)/makefiles/Makefile.defs
+
+SOURCES += \
+	$(SOURCES.java:%.java=$(SRCDIR)/$(SUBDIR)/%.java) \
+	$(SOURCES.platform.java:%.java=$(SRCREFDIR)/$(SUBDIR)/%.java)
+
+TARGETS.classes = \
+	$(SOURCES.java:%.java=$(CLASSDIR)/$(SUBDIR)/%.class) \
+	$(SOURCES.platform.java:%.java=$(CLASSDIR)/$(SUBDIR)/%.class)
+
+.KEEP_STATE:
+
+all: announce $(PREINSTALL) $(SOURCES) $(CLASSDIR) startup $(TARGETS.classes) compilethem
+
+install: all
+
+startup:
+	rm -f .class.list
+
+
+$(CLASSDIR)/$(SUBDIR)/%.class: $(SRCDIR)/$(SUBDIR)/%.java
+	$(ECHO) -- Need to compile $<
+	@echo $< >>.class.list
+
+$(CLASSDIR)/$(SUBDIR)/%.class: $(SRCREFDIR)/$(SUBDIR)/%.java
+	$(ECHO) -- Need to compile $<
+	@echo $< >>.class.list
+
+compilethem:
+	$(ECHO) -- Compiling $(shell if [ -s .class.list ] ; then tr -d '\015' <.class.list ; else echo nothing ; fi )
+	if [ -s .class.list ] ; \
+	then \
+		$(JAVAC) $(JAVA_BUILD_FLAG) \
+		 -classpath $(subst /,\\,$(CLASSPATH)) \
+		 -d $(subst /,\\,$(CLASSDIR)) \
+		 $(subst /,\\,$(shell if [ -s .class.list ] ; then \
+			$(MKSHOME)/tr -d '\015' <.class.list | $(MKSHOME)/tr -s '\012' ' '; \
+		 fi)) ; \
+	fi
+
+#$(CLASSDIR)/$(SUBDIR)/%.class: $(SRCDIR)/$(SUBDIR)/%.java
+#	$(ECHO) -- Compiling $<
+#	$(JAVAC) $(JAVA_BUILD_FLAG) \
+#		-classpath $(subst /,\\,$(CLASSPATH)) \
+#		-d $(subst /,\\,$(CLASSDIR)) \
+#		$(subst /,\\,$<)
+
+#$(CLASSDIR)/$(SUBDIR)/%.class: $(SRCREFDIR)/$(SUBDIR)/%.java
+#	$(ECHO) -- Compiling $<
+#	$(JAVAC) $(JAVA_BUILD_FLAG) \
+#		-classpath $(subst /,\\,$(CLASSPATH)) \
+#		-d $(subst /,\\,$(CLASSDIR)) \
+#		$(subst /,\\,$<)
+
+$(CLASSDIR):
+	$(ECHO) -- Creating $@
+	$(MKDIR) $@
+
+announce:
+	$(ECHO) DIRECTORY $(SUBDIR)
+

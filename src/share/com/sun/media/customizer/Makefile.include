@@ -1,0 +1,9 @@
+.PRECIOUS: *.java
+
+TOPDIR:sh =  workspace name
+SRCROOT= $(TOPDIR)/src/share
+OBJROOT= $(TOPDIR)/build/solaris/lib
+
+CLASSPATH = $(OBJROOT):$(SRCROOT):/net/quad/export/home/swing11/swingall.jar
+
+JAVAC = javac

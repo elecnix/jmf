@@ -1,0 +1,108 @@
+#
+# %W %E
+#
+
+INSTDIR = $(DESTDIR)
+IMAGESDIR = $(DESTDIR)\jmapps\images
+
+REGISTRYGEN_java = $(TOPDIR)\src\share\com\sun\media\util\RegistryGen.java
+REGISTRYGEN_class = $(DESTDIR)\RegistryGen.class
+
+REGISTRYLIB_dir = $(TOPDIR)\src\share\com\sun\media\util
+REGISTRYLIB_java = $(REGISTRYLIB_dir)\RegistryLib.java
+
+JMFPROPERTIESGEN_java = $(TOPDIR)\src\share\com\sun\media\util\JMFPropertiesGen.java
+JMFPROPERTIESGEN_class = $(DESTDIR)\JMFPropertiesGen.class
+
+
+all:  ANNOUNCE COPYJAVA2D COPYIMAGES REGISTRYSTUFF 
+
+ANNOUNCE:
+	$(ECHO) -- Epilogue...
+
+JMFPROP: FORCE
+	$(HIDE)copy $(TOPDIR)\test\win32\jmf.properties $(DESTDIR)\jmf.properties >tmp
+	$(HIDE)del tmp
+
+DOREGISTRYSTUFF: JMFPROP $(REGISTRYGEN_class) $(REGISTRYLIB_java) COMPILE_REGISTRYLIB $(JMFPROPERTIESGEN_class) GENERATE_JMFPROPERTIES
+
+FORCE:
+
+!if "$(QUICKBUILD)" == "TRUE"
+
+REGISTRYSTUFF: $(DESTDIR)\jmf.properties
+
+$(DESTDIR)\jmf.properties:
+	@$(MAKE) -nologo DOREGISTRYSTUFF
+
+COPYIMAGES: $(IMAGESDIR)
+
+$(IMAGESDIR):
+	$(ECHO) ---- Making images directory
+	$(HIDE)md $(DESTDIR)\jmapps\images
+	$(ECHO) ---- Copying images to $(IMAGESDIR)
+	$(HIDE)copy $(TOPDIR)\jmapps\jmapps\images\*.gif $(DESTDIR)\jmapps\images >tmp
+	$(HIDE)del tmp
+
+!else
+
+REGISTRYSTUFF: DOREGISTRYSTUFF
+
+COPYIMAGES: $(IMAGESDIR)
+	$(ECHO) ---- Copying images to $(IMAGESDIR)
+	$(HIDE)copy $(TOPDIR)\jmapps\jmapps\images\*.gif $(IMAGESDIR) >tmp
+	$(HIDE)del tmp
+
+$(IMAGESDIR):
+	$(ECHO) ---- Making images directory
+	$(HIDE)md $(IMAGESDIR)
+
+!endif
+
+COPYJAVA2D: FORCE
+	$(ECHO) ---- Copying Java2DRenderer classes
+	$(HIDE)copy $(TOPDIR)\src\share\com\sun\media\renderer\video\Java2DRenderer*.class $(DESTDIR)\com\sun\media\renderer\video >tmp
+	$(HIDE)copy $(TOPDIR)\src\share\com\sun\media\util\BufferToBufferedImage.class $(DESTDIR)\com\sun\media\util >tmp
+	$(HIDE)del tmp
+
+#
+# Compile the RegistryGen program
+#
+$(REGISTRYGEN_class): $(REGISTRYGEN_java)
+	$(ECHO) ---- Compiling $(REGISTRYGEN_java)
+	$(JAVAC) $(REGISTRYGEN_java)
+
+#
+# Generate the RegistryLib generic interface
+#
+$(REGISTRYLIB_java): $(REGISTRYGEN_class)
+	$(ECHO) ---- Generating registry library $@
+	$(JAVA) -classpath $(CLASSPATH) com.sun.media.util.RegistryGen \
+		-d $(REGISTRYLIB_dir) com.sun.media.util.RegistryLib -j $(ALLJAVA)
+
+#
+# Compile the RegistryLib program
+#
+COMPILE_REGISTRYLIB:
+	$(ECHO) ---- Compiling $(REGISTRYLIB_java)
+	$(JAVAC) -O $(REGISTRYLIB_java)
+
+
+#
+# Compile the JMFPropertiesGen program
+#
+$(JMFPROPERTIESGEN_class): $(JMFPROPERTIESGEN_java)
+	$(ECHO) ---- Compiling $(JMFPROPERTIESGEN_java)
+	$(JAVAC) $(JMFPROPERTIESGEN_java)
+
+#
+# Generate the jmf.properties file
+#
+GENERATE_JMFPROPERTIES:
+	$(ECHO) ---- Generating jmf.properties
+	$(JAVA) -classpath $(CLASSPATH) com.sun.media.util.JMFPropertiesGen $(ALLJAVA)
+
+
+
+install: all
+

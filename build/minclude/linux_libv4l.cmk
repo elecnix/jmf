@@ -1,0 +1,15 @@
+#
+# @(#)linux_libv4l.cmk	1.1 00/01/12
+#
+
+SOURCES_c = \
+	$(OBJDIR)\V4LCapture.c
+
+
+STUBS_NAMES = \
+	com.sun.media.protocol.v4l.V4LCapture
+
+STUBS_CLASSES = \
+	$(TARGDIR)com/sun/media/protocol/v4l/V4LCapture.class
+
+

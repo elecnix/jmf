@@ -1,0 +1,63 @@
+#
+# @(#)libjpeg.cmk	1.4 99/01/08
+# Copyright 1998 Sun Microsystems, Inc.
+
+SOURCES_c = \
+	$(OBJDIR)\jcapimin.c \
+	$(OBJDIR)\jcapistd.c \
+	$(OBJDIR)\jcomapi.c \
+	$(OBJDIR)\jcparam.c \
+	$(OBJDIR)\jctrans.c \
+	$(OBJDIR)\jcinit.c \
+	$(OBJDIR)\jcmaster.c \
+	$(OBJDIR)\jcmainct.c \
+	$(OBJDIR)\jcprepct.c \
+	$(OBJDIR)\jccoefct.c \
+	$(OBJDIR)\jccolor.c \
+	$(OBJDIR)\jcsample.c \
+	$(OBJDIR)\jcdctmgr.c \
+	$(OBJDIR)\jfdctint.c \
+	$(OBJDIR)\jfdctfst.c \
+	$(OBJDIR)\jfdctflt.c \
+	$(OBJDIR)\jchuff.c \
+	$(OBJDIR)\jcphuff.c \
+	$(OBJDIR)\jcmarker.c \
+	$(OBJDIR)\jdatadst.c \
+	$(OBJDIR)\jerror.c \
+	$(OBJDIR)\jmemmgr.c \
+	$(OBJDIR)\jutils.c \
+	$(OBJDIR)\jmemnobs.c \
+	$(OBJDIR)\encoder.c \
+	$(OBJDIR)\jdapimin.c \
+	$(OBJDIR)\jdapistd.c \
+	$(OBJDIR)\jdtrans.c \
+	$(OBJDIR)\jdmaster.c \
+	$(OBJDIR)\jdinput.c \
+	$(OBJDIR)\jdmainct.c \
+	$(OBJDIR)\jdcoefct.c \
+	$(OBJDIR)\jdpostct.c \
+	$(OBJDIR)\jdmarker.c \
+	$(OBJDIR)\jdhuff.c \
+	$(OBJDIR)\jdphuff.c \
+	$(OBJDIR)\jddctmgr.c \
+	$(OBJDIR)\jidctint.c \
+	$(OBJDIR)\jidctfst.c \
+	$(OBJDIR)\jidctflt.c \
+	$(OBJDIR)\jidctred.c \
+	$(OBJDIR)\jdsample.c \
+	$(OBJDIR)\jdcolor.c \
+	$(OBJDIR)\jdmerge.c \
+	$(OBJDIR)\jquant1.c \
+	$(OBJDIR)\jquant2.c \
+	$(OBJDIR)\jdatasrc.c \
+	$(OBJDIR)\decoder2.c \
+	
+
+STUBS_NAMES = \
+	com.sun.media.codec.video.jpeg.NativeDecoder \
+	com.sun.media.codec.video.jpeg.NativeEncoder
+
+STUBS_CLASSES = \
+	$(TARGDIR)com/sun/media/codec/video/jpeg/NativeDecoder.class \
+	$(TARGDIR)com/sun/media/codec/video/jpeg/NativeEncoder.class
+

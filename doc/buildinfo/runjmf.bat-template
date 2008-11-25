@@ -1,0 +1,19 @@
+REM @(#)runjmf.bat-template	1.5 01/04/03
+REM
+REM This is a bat script template for running JMStudio
+
+
+set oldpath=%path%
+set oldclasspath=%CLASSPATH%
+
+REM Set JMFHOME (necessary)
+set JMFHOME=<top level JMF dir>
+
+set CLASSPATH=%JMFHOME%\build\win32\image\lib\jmf.jar;%JMFHOME%\build\win32\image\lib\sound.jar;.
+
+set path=%JMFHOME%\build\win32\lib;%path%
+
+java JMStudio
+
+set path=%oldpath%
+set CLASSPATH=%oldclasspath%

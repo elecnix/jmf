@@ -1,0 +1,14 @@
+#
+# @(#)win32_libvfw.cmk	1.2 03/04/25
+#
+
+SOURCES_c = \
+	$(OBJDIR)\vfwcapture.c
+
+STUBS_NAMES = \
+	com.sun.media.protocol.vfw.VFWCapture
+
+STUBS_CLASSES = \
+	$(TARGDIR)com/sun/media/protocol/vfw/VFWCapture.class
+
+

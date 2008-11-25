@@ -1,0 +1,24 @@
+#
+# @(#)sol_libmpx2.cmk	1.1 00/02/24
+#
+
+#SOURCES_cc = \
+#	$(OBJDIR)\yrc.cc
+
+SOURCES_c = \
+	$(OBJDIR)\mk_x.c \
+	$(OBJDIR)\mk_video.c \
+	$(OBJDIR)\mk_play.c \
+	$(OBJDIR)\mk_main.c \
+	$(OBJDIR)\mk_io.c \
+	$(OBJDIR)\mk_dmx.c \
+	$(OBJDIR)\mk_disp.c \
+	$(OBJDIR)\mk_audio.c \
+	$(OBJDIR)\Mpx2NativePlayer.c 
+
+STUBS_NAMES = \
+	com.sun.media.codec.video.mpx2.Mpx2NativePlayer
+
+STUBS_CLASSES = \
+	$(TARDIR)com/sun/media/codec/video/mpx2/Mpx2NativePlayer.class
+

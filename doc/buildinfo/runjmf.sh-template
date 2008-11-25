@@ -1,0 +1,21 @@
+#!/bin/csh
+#
+# @(#)runjmf.sh-template	1.6 01/04/03
+#
+# This is a shell script template to run JMStudio on Solaris or Linux
+#
+
+
+# Set JMFHOME (necessary)
+setenv JMFHOME <top level JMF dir>
+
+# Set PLATFORM (necessary)
+setenv PLATFORM <solaris or linux>
+
+setenv CLASSPATH .:$JMFHOME/build/$PLATFORM/image/lib/sound.jar:$JMFHOME/build/$PLATFORM/image/lib/jmf.jar
+setenv LD_LIBRARY_PATH $JMFHOME/build/$PLATFORM/image/lib:$LD_LIBRARY_PATH
+
+#
+# Launch the app.
+#
+java JMStudio

@@ -1,0 +1,24 @@
+#
+# @(#)sol_libh263.cmk	1.5	01/02/07 SMI
+#
+
+SOURCES_c = \
+	$(OBJDIR)\H263JNI.c \
+  $(OBJDIR)\h263decoder.c \
+  $(OBJDIR)\addblck_vis.c \
+  $(OBJDIR)\get_mv.c \
+  $(OBJDIR)\getbits.c \
+  $(OBJDIR)\getblk.c \
+  $(OBJDIR)\gethdr.c \
+  $(OBJDIR)\getpic.c \
+  $(OBJDIR)\getvlc.c \
+  $(OBJDIR)\idct_vis.c \
+  $(OBJDIR)\recon_vis.c \
+  $(OBJDIR)\sac.c \
+  $(OBJDIR)\yuv2rgb32.c
+
+STUBS_NAMES = \
+	com.sun.media.codec.video.h263.NativeDecoder
+
+STUBS_CLASSES = \
+	$(TARGDIR)com/sun/media/codec/video/h263/NativeDecoder.class

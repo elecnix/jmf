@@ -1,0 +1,18 @@
+#
+# @(#)win32_libdevice.cmk	1.2 99/03/10
+#
+
+SOURCES_c = \
+	$(OBJDIR)\device.c
+
+STUBS_NAMES = \
+	com.ibm.media.protocol.device.DataSource \
+	com.ibm.media.protocol.device.DevicePushSourceStream
+
+STUBS_CLASSES = \
+	$(TARGDIR)com/sun/media/vfw/VFWCapture.class \
+	$(TARGDIR)com/ibm/media/protocol/device/DataSource.class \
+	$(TARGDIR)com/ibm/media/protocol/device/DevicePushSourceStream.class
+
+
+

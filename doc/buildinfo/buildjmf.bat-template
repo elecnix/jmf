@@ -1,0 +1,33 @@
+REM @(#)buildjmf.bat-template	1.2 99/05/27
+REM
+REM This is a bat script template for building JMF on win32.
+
+REM jdk1.2.2 or above is required to build JMF
+REM set JAVAHOME=<top level jdk dir>
+set JAVAHOME=c:\jdk1.2.2
+
+set JMFHOME=<top level JMF dir>
+set SOUNDCLASSES=%JMFHOME%\javasound
+
+REM DirectX SDK
+REM set DXMEDIA=<top level directX SDK>
+
+set MSDEVHOME=<Visual C++ Directory>
+
+REM ClASSPATH and path are required since JMF runs itself
+REM during the build process to register the plugin components.
+set oldpath=%path%
+set oldclasspath=%CLASSPATH%
+set CLASSPATH=%JMFHOME%\build\win32\lib;%SOUNDCLASSES%\sound.jar;.
+set path=%JMFHOME%\build\win32\lib;%SOUNDCLASSES%\win32;%path%
+set path=%MSDEVHOME%\bin;%path%
+
+REM Uncomment this if you want to see a verbose trace of the build
+REM set MESSAGES=VERBOSE
+
+cd %JMFHOME%\build\win32
+nmake
+nmake image
+
+set path=%oldpath%
+set CLASSPATH=%oldclasspath%

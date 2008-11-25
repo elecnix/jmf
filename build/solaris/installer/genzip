@@ -1,0 +1,42 @@
+#!/bin/sh
+
+# usage: genzip <archive-name> <archive-dir>
+
+rootdir=`pwd`
+scriptname=script.$$
+
+echo "zip'ing..."
+
+zip -r $1.zip $*
+
+cat unzipsfx $1.zip > $1
+
+echo "Checksumming..."
+
+sum=`/usr/bin/sum $1`
+index=1
+for s in $sum
+do
+    case $index in
+    1)  sum1=$s;
+	index=2;
+	;;
+    2)  sum2=$s;
+	index=3;
+	;;
+    esac
+done
+echo $sum1 $sum2
+
+echo "Generating script..."
+
+sed -e s/SUM1/$sum1/ -e s/SUM2/$sum2/ $rootdir/script.txt > $scriptname
+cat $scriptname $1 > $1.bin
+chmod u+x $1.bin
+
+echo "Cleaning up..."
+rm -f $scriptname
+rm -f $1.zip
+rm -f $1
+
+echo "Done"

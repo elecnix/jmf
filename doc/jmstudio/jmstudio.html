@@ -1,0 +1,757 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="Description" content="Describes how to use the JMFSamleApp application in JMF 2.1.1b for playback, transcoding and capture">
+   <meta name="KeyWords" content="JMF">
+   <meta name="GENERATOR" content="Mozilla/4.61 [en] (WinNT; I) [Netscape]">
+   <meta name="Author" content="Dror Gill">
+   <title>JMStudio User's Guide</title>
+</head>
+<body text="#000000" bgcolor="#FFFFFF" link="#0000EE" vlink="#800080" alink="#FF0000">
+
+<h2>
+<font face="Arial, Helvetica">JMStudio User's Guide</font></h2>
+<font face="Arial, Helvetica">This guide describes how to use JMStudio.
+JMStudio is a stand alone Java application that uses the JMF 2.0 API to
+play, capture, transcode, and write media data. JMStudio also uses the
+JMF RTP APIs to receive and transmit media streams across the network.</font>
+<br>&nbsp;
+<table BORDER=0 COLS=1 WIDTH="100%" BGCOLOR="#D0D0FF" NOSAVE >
+<tr>
+<td><font face="Arial,Helvetica"><font size=+2>Contents</font></font></td>
+</tr>
+</table>
+
+<ul>
+<li>
+<font face="Arial, Helvetica"><a href="#Start">Getting Started</a></font></li>
+
+<ul>
+<li>
+<font face="Arial, Helvetica"><a href="#Running">Running JMStudio</a></font></li>
+
+<li>
+<font face="Arial, Helvetica"><a href="#New">Opening a New JMStudio Window</a></font></li>
+
+<li>
+<font face="Arial, Helvetica"><a href="#Exit">Exiting JMStudio</a></font></li>
+
+<li>
+<font face="Arial, Helvetica"><a href="#MenuCommandsSummary">Menu Summary</a></font></li>
+</ul>
+
+<br>&nbsp;
+<li>
+<font face="Arial, Helvetica"><a href="#Playback">Playing Media Data with
+JMStudio</a></font></li>
+
+<ul>
+<li>
+<font face="Arial, Helvetica"><a href="#FilePlayback">Playing a File</a></font></li>
+
+<li>
+<font face="Arial, Helvetica"><a href="#URLPlayback">Playing a URL</a></font></li>
+
+<li>
+<font face="Arial, Helvetica"><a href="#Replay">Replaying a Previous File
+or URL</a></font></li>
+
+<li>
+<font face="Arial, Helvetica"><a href="#RTPReceive">Receiving and Playing
+RTP Media Streams</a></font></li>
+
+<li>
+<font face="Arial, Helvetica"><a href="#PlaybackControls">Controlling the
+Presentation</a></font></li>
+
+<li>
+<font face="Arial, Helvetica"><a href="#Close">Closing the Current Player</a></font></li>
+</ul>
+
+<br>&nbsp;
+<li>
+<font face="Arial, Helvetica"><a href="#Saving">Saving a Media Stream to
+a File</a></font></li>
+
+<br>&nbsp;
+<li>
+<font face="Arial, Helvetica"><a href="#Exporting">Transmitting Media Streams
+via RTP</a></font></li>
+
+<br>&nbsp;
+<li>
+<font face="Arial, Helvetica"><a href="#Capture">Capturing Media Data with
+JMStudio</a></font></li>
+
+<br>&nbsp;
+<ul>
+<li>
+<font face="Arial, Helvetica"><a href="#CapturePreview">Previewing Captured
+Media Data</a></font></li>
+
+<br>&nbsp;</ul>
+
+<li>
+<font face="Arial, Helvetica"><a href="#Viewer">Using the Plug-In Viewer</a></font></li>
+
+<br>&nbsp;
+<li>
+<font face="Arial, Helvetica"><a href="#KnownLimitations">Known Limitations</a></font></li>
+</ul>
+<a NAME="Start"></a>
+<table BORDER=0 COLS=1 WIDTH="100%" BGCOLOR="#D0D0FF" NOSAVE >
+<tr>
+<td><font face="Arial,Helvetica"><font size=+2>Getting Started</font></font></td>
+</tr>
+</table>
+
+<p>Before you can run JMStudio, you must have JMF 2.1.1b installed. For
+information about setting up JMF, see the <a href="setup.html">Setup</a>
+pages.
+<h4>
+<a NAME="Running"></a>Running JMStudio</h4>
+To launch JMStudio, you can run the batch file <tt>JMStudio.bat</tt> or
+invoke:
+<blockquote><tt>java JMStudio</tt></blockquote>
+If you run JMStudio directly, both the JMF 2.1.1b classes and the JMStudio
+classes must be in your classpath.
+<p>When JMStudio is launched, just the menu is visible:
+<p><img SRC="jmstudio.gif" >
+<h4>
+<a NAME="New"></a>Opening a new JMStudio Window</h4>
+To create a new instance of the JMStudio application, select <b>New Window</b>
+from the File menu.&nbsp; A new instance of JMStudio is launched without
+affecting the current one. Both applications share the same Java virtual
+machine.
+<h4>
+<a NAME="Exit"></a>Exiting JMStudio</h4>
+To exit JMStudio, select <b>Exit</b> from the File menu.
+<h4>
+<a NAME="MenuCommandsSummary"></a>Menu Summary</h4>
+
+<table>
+<tr VALIGN=TOP>
+<td><b><font face="Arial,Helvetica"><font color="#993366">File | Open File</font></font></b></td>
+
+<td><font face="Arial,Helvetica">Ctrl+O</font></td>
+
+<td><font face="Arial,Helvetica">Opens a file for playback.</font></td>
+</tr>
+
+<tr VALIGN=TOP>
+<td><b><font face="Arial,Helvetica"><font color="#993366">File | Open URL</font></font></b></td>
+
+<td><font face="Arial,Helvetica">Ctrl+U</font></td>
+
+<td><font face="Arial,Helvetica">Opens a URL or MediaLocator for playback.</font></td>
+</tr>
+
+<tr VALIGN=TOP>
+<td><b><font face="Arial,Helvetica"><font color="#993366">File | Open RTP
+Session</font></font></b></td>
+
+<td><font face="Arial,Helvetica">Ctrl+R</font></td>
+
+<td><font face="Arial,Helvetica">Opens an RTP receive/playback session.</font></td>
+</tr>
+
+<tr VALIGN=TOP>
+<td><b><font face="Arial,Helvetica"><font color="#993366">File | Capture
+Preview</font></font></b></td>
+
+<td><font face="Arial,Helvetica">Ctrl+P</font></td>
+
+<td><font face="Arial,Helvetica">Enables you to monitor media data as it
+is captured.</font></td>
+</tr>
+
+<tr>
+<td><b><font face="Arial,Helvetica"><font color="#993366">File | Capture
+Controls</font></font></b></td>
+
+<td></td>
+
+<td>Enables you to control capture parameters.</td>
+</tr>
+
+<tr VALIGN=TOP>
+<td><b><font face="Arial,Helvetica"><font color="#993366">File | Save As</font></font></b></td>
+
+<td><font face="Arial,Helvetica">Ctrl+A</font></td>
+
+<td><font face="Arial,Helvetica">Opens a dialog from which you can transcode
+and save media data.</font></td>
+</tr>
+
+<tr VALIGN=TOP>
+<td><b><font face="Arial,Helvetica"><font color="#993366">File | Transmit</font></font></b></td>
+
+<td>Ctrl+T</td>
+
+<td><font face="Arial,Helvetica">Opens a dialog from which you can transmit
+media data over the network.</font></td>
+</tr>
+
+<tr VALIGN=TOP>
+<td><b><font face="Arial,Helvetica"><font color="#993366">File | Close
+Player</font></font></b></td>
+
+<td><font face="Arial,Helvetica">Ctrl+W</font></td>
+
+<td><font face="Arial,Helvetica">Closes the current Player or Processor.</font></td>
+</tr>
+
+<tr VALIGN=TOP>
+<td><b><font face="Arial,Helvetica"><font color="#993366">File | Visited
+URLs</font></font></b></td>
+
+<td></td>
+
+<td><font face="Arial,Helvetica">Opens a menu from which you can select
+a URL from a list of URLs recently accessed by JMStudio.</font></td>
+</tr>
+
+<tr VALIGN=TOP>
+<td><b><font face="Arial,Helvetica"><font color="#993366">File | New Window</font></font></b></td>
+
+<td><font face="Arial,Helvetica">Ctrl+N</font></td>
+
+<td><font face="Arial,Helvetica">Launches a new instance of the JMStudio
+application.</font></td>
+</tr>
+
+<tr VALIGN=TOP>
+<td><b><font face="Arial,Helvetica"><font color="#993366">File | Plug-In
+Viewer</font></font></b></td>
+
+<td><font face="Arial,Helvetica">Ctrl+V</font></td>
+
+<td><font face="Arial,Helvetica">Opens a window that displays the media
+processing flow.</font></td>
+</tr>
+
+<tr VALIGN=TOP>
+<td><b><font face="Arial,Helvetica"><font color="#993366">File | Exit</font></font></b></td>
+
+<td></td>
+
+<td><font face="Arial,Helvetica">Terminates the application.</font></td>
+</tr>
+
+<tr VALIGN=TOP>
+<td><b><font face="Arial,Helvetica"><font color="#993366">Player | Auto
+Play</font></font></b></td>
+
+<td></td>
+
+<td><font face="Arial,Helvetica">Toggles the auto play state of the current
+Player or Processor. When auto play is enabled, the player begins presenting
+the media stream automatically.</font></td>
+</tr>
+
+<tr VALIGN=TOP>
+<td><b><font face="Arial,Helvetica"><font color="#993366">Player | Auto
+Loop</font></font></b></td>
+
+<td></td>
+
+<td><font face="Arial,Helvetica">Toggles the auto loop state of the current
+Player or Processor. When auto loop is enabled, the player automatically
+replays the media stream when the end of media is reached.</font></td>
+</tr>
+
+<tr VALIGN=TOP>
+<td><b><font face="Arial,Helvetica"><font color="#993366">Player | Maintain
+Aspect Ratio</font></font></b></td>
+
+<td></td>
+
+<td><font face="Arial,Helvetica">Maintains the aspect ratio of the video
+window when the JMStudio window is resized.</font></td>
+</tr>
+
+<tr VALIGN=TOP>
+<td><b><font face="Arial,Helvetica"><font color="#993366">Player | Full
+Screen</font></font></b></td>
+
+<td><font face="Arial,Helvetica">Ctrl+F</font></td>
+
+<td><font face="Arial,Helvetica">Expands the JMStudio window to fill the
+entire screen. Click anywhere to restore the JMStudio window to its original
+size.</font></td>
+</tr>
+
+<tr>
+<td><b><font face="Arial,Helvetica"><font color="#993366">Player | Snap
+Shot</font></font></b></td>
+
+<td>Ctrl+S</td>
+
+<td>Takes a snap shot of the current video frame being displayed.</td>
+</tr>
+
+<tr VALIGN=TOP>
+<td><b><font face="Arial,Helvetica"><font color="#993366">Help | About
+JMStudio</font></font></b></td>
+
+<td><font face="Arial,Helvetica">Ctrl+H</font></td>
+
+<td><font face="Arial,Helvetica">Displays an about box that contains the
+version number and copyright information for JMStudio.</font></td>
+</tr>
+</table>
+
+<p><a NAME="Playback"></a>
+<table BORDER=0 COLS=1 WIDTH="100%" BGCOLOR="#D0D0FF" NOSAVE >
+<tr>
+<td><font face="Arial,Helvetica"><font size=+2>Playing Media Data with
+JMStudio</font></font></td>
+</tr>
+</table>
+
+<p><font face="Arial,Helvetica">JMStudio lets you play media streams from
+a variety of sources--files, URLs, or RTP transmissions.</font>
+<h4>
+<a NAME="FilePlayback"></a><font face="Arial,Helvetica">Playing a File</font></h4>
+<font face="Arial,Helvetica">To play a file:</font>
+<ol>
+<li>
+<font face="Arial,Helvetica">Select <b>Open File</b> from the File menu.&nbsp;
+The Open File dialog is displayed:</font></li>
+
+<p><br><img SRC="jmsopenfile.gif" >
+<br>&nbsp;
+<li>
+<font face="Arial,Helvetica">In the Open File dialog, select the file you
+want to play and click <b>OK</b>.</font></li>
+
+<br>&nbsp;
+<p>&nbsp;
+<p><font face="Arial,Helvetica">A JMF Player for the selected file is created.
+If Auto Play is enabled, the player is started and presentation of the
+selected media file begins automatically.</font>
+<p><img SRC="jmsplaying.gif" >
+<p><font face="Arial,Helvetica">If the format of the file is not supported
+by JMF, an error message is displayed.</font></ol>
+
+<h4>
+<a NAME="URLPlayback"></a><font face="Arial,Helvetica">Playing Media from
+a URL or MediaLocator</font></h4>
+<font face="Arial,Helvetica">To play a URL or MediaLocator:</font>
+<ol>
+<li>
+<font face="Arial,Helvetica">Select <b>Open URL</b> from the File menu.
+The Open URL dialog is displayed:</font></li>
+
+<p><br><img SRC="jmsopenurl.gif" >
+<br>&nbsp;
+<li>
+<font face="Arial,Helvetica">In the Open URL dialog, enter the URL or MediaLocator
+you want to play, for example <tt>http://greatmedia.ibm.com/clip1.mov</tt>.</font></li>
+
+<br>&nbsp;
+<li>
+<font face="Arial,Helvetica">Click <b>Open</b>.</font></li>
+
+<p><br><font face="Arial,Helvetica">If the URL exists, and its format is
+supported by JMF, a JMF Player for this URL is created and started. If
+the URL cannot be found or the format is not supported by JMF, an error
+message is displayed. Supported protocols for the JMF 2.1.1b implementation
+include HTTP, FTP, and FILE.</font></ol>
+<font face="Arial,Helvetica">You can use the <b>Open URL</b> command to
+play any URL or media locator, including RTP media locators. When you use
+Open URL to play an RTP stream, the first stream of the RTP session is
+played. To use Open URL to play an RTP Stream:</font>
+<ol>
+<li>
+<font face="Arial,Helvetica">Select <b>Open URL</b> from the File menu.</font></li>
+
+<br>&nbsp;
+<li>
+<font face="Arial,Helvetica">In the Open URL dialog, enter the media locator
+that identifies the RTP source from which you want to receive the RTP stream.
+For example, <tt>rtp://mediastreams.ibm.com:49150/audio/1</tt>. (See <a href="#rtpmedialocator">RTP
+Media Locator</a> for a description of an RTP-specific media locator.)</font></li>
+
+<br>&nbsp;
+<li>
+<font face="Arial,Helvetica">Click <b>Open</b>.</font></li>
+</ol>
+<font face="Arial,Helvetica">For more information about playing RTP streams,
+see <a href="RTPReceive">Receiving and Playing RTP Streams</a>.</font>
+<p><font face="Arial,Helvetica">The <b>Open URL</b> command is also used
+to capture media data. For more information, see <a href="#Capture">Capturing
+Media Data with JMStudio</a>.</font>
+<h4>
+<a NAME="Replay"></a><font face="Arial,Helvetica">Replaying a Previous
+File or URL</font></h4>
+<font face="Arial,Helvetica">To replay a previously played file or URL,
+select <b>Visited URLs</b> from the File menu.&nbsp; A hierarchical menu
+is displayed that contains all of the files and URLs previously played
+by JMStudio. This list is sorted by media type.&nbsp; When you select a
+file or URL from this menu, a new JMF Player is created and started.&nbsp;
+This list is maintained across application sessions. The list of visited
+URLs is stored in a file called ".JMStudio" in your home directory. The
+home directory varies depending on the Java VM that you use. So don't be
+surprised if all your visited URLs disappear when you use a different Java
+VM. Some common locations are "C:\", "%USERPROFILE%" and "%WINDIR%\Java".</font>
+<h4>
+<a NAME="RTPReceive"></a><font face="Arial,Helvetica">Receiving and Playing
+RTP Streams</font></h4>
+<font face="Arial,Helvetica">To receive a media stream using the RTP protocol:</font>
+<ol>
+<li>
+<font face="Arial,Helvetica">Select <b>Open RTP Session</b> from the File
+menu. The Open RTP Session dialog is displayed:</font></li>
+
+<p><br><img SRC="jmsopenrtp.gif" >
+<br>&nbsp;
+<li>
+<font face="Arial,Helvetica">In the Open RTP Session dialog, enter the
+session address in the Address field (eg. 129.144.251.181), enter the port
+no. in the Port field (eg. 23450) and select a TTL (Time To Live). This
+constitutes the address of the transmitting source (or multicast address
+if its a multicast transmission). You can read more about RTP session addresses
+in the Programmer's Guide.</font></li>
+
+<br>&nbsp;
+<p>&nbsp;
+<p><a NAME="rtpmedialocator"></a><font face="Arial,Helvetica">The format
+of an RTP Media Locator is: <tt>rtp://address:port[:ssrc]/content-type/[ttl]</tt>
+where:</font>
+<table>
+<tr VALIGN=TOP>
+<td><b><font face="Arial,Helvetica">address</font></b></td>
+
+<td><font face="Arial,Helvetica">The IP address of the RTP session</font></td>
+</tr>
+
+<tr VALIGN=TOP>
+<td><b><font face="Arial,Helvetica">port</font></b></td>
+
+<td><font face="Arial,Helvetica">The port of the RTP session.&nbsp;</font></td>
+</tr>
+
+<tr VALIGN=TOP>
+<td><b><font face="Arial,Helvetica">ssrc</font></b></td>
+
+<td><font face="Arial,Helvetica">SSRC Identifier of the source from which
+data is to be received.&nbsp; If ssrc is not specified, the first stream
+detected by the RTP Session Manager will be selected as a stream for the
+DataSource.&nbsp;</font></td>
+</tr>
+
+<tr VALIGN=TOP>
+<td><b><font face="Arial,Helvetica">ttl</font></b></td>
+
+<td><font face="Arial,Helvetica">Time to Live of the RTP session.&nbsp;</font></td>
+</tr>
+
+<tr VALIGN=TOP>
+<td><b><font face="Arial,Helvetica">content-type</font></b></td>
+
+<td><font face="Arial,Helvetica">A string defining the data content type.
+e.g. video, audio, motion, text, etc. The RTP media handler (Player) will
+be created for this specific media type.</font></td>
+</tr>
+</table>
+
+<br>&nbsp;
+<li>
+<font face="Arial,Helvetica">After you enter the RTP session address and
+port, click the <b>Open</b> button. JMStudio creates an RTP Session Manager
+for the specified RTP media location.</font></li>
+</ol>
+<font face="Arial,Helvetica">JMStudio displays two buttons during an RTP
+session: <b>Statistics</b>, and <b>Close RTP Session</b>:</font>
+<ul>
+<li>
+<font face="Arial,Helvetica">Clicking <b>Close RTP Session</b> closes the
+RTP Session Manager.</font></li>
+
+<br>&nbsp;
+<li>
+<font face="Arial,Helvetica">Clicking the <b>Statistics</b> button opens
+a Participant List window that displays information about the RTP session
+participants. This window contains another <b>Statistics</b> button that
+displays a window that displays the RTP session statistics.</font></li>
+</ul>
+<font face="Arial,Helvetica">When RTP packets actually begin to arrive,
+a JMF Player is opened to present the RTP media stream. This player has
+all of the standard JMF <a href="#PlaybackControls">presentation controls</a>
+except for the Seek bar, which is not relevant for RTP streams.</font>
+<p><font face="Arial,Helvetica">For more information about sending and
+receiving RTP streams with JMF 2.1.1b, see "Receiving and Presenting RTP Media
+Streams" in the Java Media Framework API guide.</font>
+<h4>
+<a NAME="PlaybackControls"></a><font face="Arial,Helvetica">Controlling
+a Media Presentation</font></h4>
+<img SRC="jmscontrols.gif" >
+<p><font face="Arial,Helvetica">While media data is being played, the following
+controls are available:</font>
+<table>
+<tr VALIGN=TOP>
+<td><b><font face="Arial,Helvetica"><font color="#993366">Play</font></font></b></td>
+
+<td><font face="Arial,Helvetica">Starts presentation of the media data.
+If the presentation was paused, playback resumes from the point at which
+it was paused.</font></td>
+</tr>
+
+<tr VALIGN=TOP>
+<td><b><font face="Arial,Helvetica"><font color="#993366">Pause</font></font></b></td>
+
+<td><font face="Arial,Helvetica">Pauses presentation of the media data.&nbsp;
+The Play button will resume playback from the point at which it was paused.</font></td>
+</tr>
+
+<tr>
+<td><b><font face="Arial,Helvetica"><font color="#993366">Step Back / Forward</font></font></b></td>
+
+<td>Steps back or forward by one frame. If either button is kept pressed,
+the action automatically repeats at the rate of two frames per second.</td>
+</tr>
+
+<tr VALIGN=TOP>
+<td><b><font face="Arial,Helvetica"><font color="#993366">Seek</font></font></b></td>
+
+<td><font face="Arial,Helvetica">Sets the media to a new playback position.
+You seek by dragging the Seek slider or clicking within the Seek bar. When
+the media is playing, the seek does not take effect until the mouse button
+is released. When the media is paused, dragging the Seek slider will cause
+the video to be continually updated.</font></td>
+</tr>
+
+<tr VALIGN=TOP>
+<td><b><font face="Arial,Helvetica"><font color="#993366">Mute</font></font></b></td>
+
+<td><font face="Arial,Helvetica">Mutes the audio. The presentation (including
+video, if applicable) continues while the audio is muted.&nbsp; Clicking
+the Mute button mutes the audio, clicking it again resumes normal audio
+playback.</font></td>
+</tr>
+
+<tr VALIGN=TOP>
+<td><b><font face="Arial,Helvetica"><font color="#993366">Volume</font></font></b></td>
+
+<td><font face="Arial,Helvetica">Right-clicking on the Mute button pops
+up a volume slider. This sets the volume level. You can drag the volume
+slider to increase or decrease the volume. Dragging to the right increases
+the volume. In some situations, the volume slider is unavailable.</font></td>
+</tr>
+
+<tr VALIGN=TOP>
+<td><b><font face="Arial,Helvetica"><font color="#993366">Information</font></font></b></td>
+
+<td><font face="Arial,Helvetica">Displays the media properties, which contains
+information about the media being played, including the JMF version, URL
+name, duration, bit rate, video encoding, window size, frame rate, audio
+encoding, and audio quality.</font></td>
+</tr>
+
+<tr VALIGN=TOP>
+<td><b><font face="Arial,Helvetica"><font color="#993366">Zoom</font></font></b></td>
+
+<td><font face="Arial,Helvetica">Right-clicking on the video window displays
+a menu from which you can set the image scale. Available options are 1:2
+(half size), 1:1 (normal size), 2:1 (double size) and 4:1 (quadruple size).</font></td>
+</tr>
+
+<tr VALIGN=TOP>
+<td><b><font face="Arial,Helvetica"><font color="#993366">Rate</font></font></b></td>
+
+<td><font face="Arial,Helvetica">Right-clicking on the Information button
+displays a menu from which you can set the media playback rate. The rate
+can be set to any value from 1/4 of the normal speed up to 8 times the
+normal speed.</font></td>
+</tr>
+
+<tr VALIGN=TOP>
+<td><b><font face="Arial,Helvetica"><font color="#993366">Auto Loop</font></font></b></td>
+
+<td><font face="Arial,Helvetica">Enabling <b>Auto Loop</b> in the Player
+menu causes the media to play continuously, restarting each time it reaches
+the end of the media. Selecting the auto replay option repeatedly toggles
+the replay setting on and off.</font></td>
+</tr>
+</table>
+
+<h4>
+<a NAME="Close"></a><font face="Arial,Helvetica">Closing the Current Player</font></h4>
+<font face="Arial,Helvetica">To close the current Player or Processor,
+select <b>Close</b> from the File menu.&nbsp; This removes the presentation
+controls and closes the current Player.</font>
+<p><a NAME="Saving"></a>
+<table BORDER=0 COLS=1 WIDTH="100%" BGCOLOR="#D0D0FF" NOSAVE >
+<tr>
+<td><font face="Arial,Helvetica"><font size=+2>Saving a Media Stream to
+a File</font></font></td>
+</tr>
+</table>
+
+<p><font face="Arial,Helvetica">JMStudio enables you to transcode a media
+stream and write it to a file. Transcoding is the process of converting
+a media stream or some of its tracks from one media format to another.&nbsp;
+To transcode and save a media file, URL, or captured media stream with
+JMStudio:</font>
+<ol>
+<li>
+<font face="Arial,Helvetica">Open the source (<a href="#FilePlayback">File
+| Open File</a> or <a href="#URLPlayback">File | Open URL</a>) .</font></li>
+
+<br>&nbsp;
+<li>
+<font face="Arial,Helvetica">Select <b>Save As</b> from the File menu.
+The Save As dialog is displayed:</font></li>
+
+<p><br><img SRC="jmssaveaudio.gif" >
+<br>&nbsp;
+<li>
+<font face="Arial,Helvetica">In the Save As dialog, set the encoding parameters
+for each track that you want to include in the output file.</font></li>
+
+<br>&nbsp;
+<li>
+<font face="Arial,Helvetica">To exclude a track, disable the <b>Enable
+Track</b> checkbox.</font></li>
+
+<br>&nbsp;
+<li>
+<font face="Arial,Helvetica">Once you've specified the encoding parameters
+for each track you want to write, click Save.</font></li>
+
+<br>&nbsp;
+<li>
+<font face="Arial,Helvetica">In the Save as File dialog, enter the name
+of the file in which you want to save the transcoded media data.</font></li>
+
+<br>&nbsp;
+<li>
+<font face="Arial,Helvetica">Click <b>OK/Save</b> to write the media file.</font></li>
+</ol>
+<a NAME="Exporting"></a>
+<table BORDER=0 COLS=1 WIDTH="100%" BGCOLOR="#D0D0FF" NOSAVE >
+<tr>
+<td><font face="Arial,Helvetica"><font size=+2>Transmitting a Media Stream</font></font></td>
+</tr>
+</table>
+
+<p>You can use the JMStudio Transmit command to transcode a media stream
+and transmit it across the network using RTP.
+<h3>
+<a NAME="RTPTransmit"></a></h3>
+&nbsp;
+<ol>
+<li>
+Select <b>Transmit</b> from the File menu. The Transmit wizard is displayed:</li>
+
+<p><br><img SRC="jmstransmit1.gif" height=481 width=481>
+<br>&nbsp;
+<br>&nbsp;
+<li>
+Select the source location of the media. You can select a File or a Capture
+source.</li>
+
+<br>&nbsp;
+<li>
+Click on Next. This will take you to the page where you can select the
+format of the Audio/Video tracks to be transmitted. You can disable tracks
+that you do not wish to transmit.</li>
+
+<p><br><img SRC="jmstransmit2.gif" height=481 width=481>
+<br>&nbsp;
+<br>&nbsp;
+<li>
+Click on Next to move on to the RTP parameters page. Enter the session
+address, port and TTL for each track that you wish to transmit.</li>
+
+<p><br><img SRC="jmstransmit3.gif" height=481 width=482>
+<br>&nbsp;
+<li>
+Click on Finish to start the transmission. You can also click on Back if
+you wish to make changes in the previous pages.</li>
+
+<br>&nbsp;
+<p>&nbsp;</ol>
+For more information about sending and receiving RTP streams with JMF 2.1.1b,
+see "Receiving and Presenting RTP Media Streams" in the Java Media Framework
+API Guide.
+<ol>&nbsp;</ol>
+<a NAME="Capture"></a>
+<table BORDER=0 COLS=1 WIDTH="100%" BGCOLOR="#D0D0FF" NOSAVE >
+<tr>
+<td><font face="Arial,Helvetica"><font size=+2>Capturing Media Data</font></font></td>
+</tr>
+</table>
+
+<p>JMF supports media capture through special DataSources called Capture
+DataSources.&nbsp; To capture media with JMStudio:
+<br><a NAME="CapturePreview"></a>
+<h4>
+Previewing Captured Media Data</h4>
+JMStudio enables you to monitor the media data as it is captured. To preview
+captured media data:
+<ol>
+<li>
+Select <b>Capture Preview</b> from the File menu. The Capture Preview dialog
+is displayed:</li>
+
+<p><br><img SRC="jmscapprev.gif" >
+<br>&nbsp;
+<li>
+Select the capture device from which you want to preview incoming media
+data and the format in which you want to capture the media.</li>
+</ol>
+<a NAME="Viewer"></a>
+<table BORDER=0 COLS=1 WIDTH="100%" BGCOLOR="#D0D0FF" NOSAVE >
+<tr>
+<td><font face="Arial,Helvetica"><font size=+2>Using the Plug-In Viewer</font></font></td>
+</tr>
+</table>
+
+<p>The JMStudio includes a viewer that displays a graphical overview of
+a Processor's tracks and plug-ins. This graph enables you to monitor of
+the media flow during playback, capturing, or transcoding.
+<p>To open the Plug-In Viewer for the media currently being presented,
+select
+<b>Plug-In Viewer</b> from the File menu. This opens the Plug-In
+Viewer window, which displays the plug-ins currently loaded and the connections
+between them:
+<p><img SRC="jmsviewer.gif" >
+<p>To open the Plug-In Viewer for a transcoding processor:
+<ol>
+<li>
+Click the info button to open the Processor's information dialog.</li>
+
+<br>&nbsp;
+<li>
+Select the Misc tab.</li>
+
+<br>&nbsp;
+<li>
+Select the Plug-In Viewer.</li>
+</ol>
+To get information about a specific plug-in, position the mouse pointer
+over the box representing that plug-in. The plug-in name and class name
+is displayed. While the Processor is active, the flow of media Buffers
+between the plug-ins is displayed in green in the plug-in's input and output
+boxes, located to the left and to the right of the plug-in. Buffers with
+an <b>End of Media</b> flag are shown in red.
+<p>To view the parameters of the Buffers that are passed between the plug-ins,
+position the mouse over the small boxes to the left or to the right of
+the plug-in. The Buffer parameters, including format and length, are displayed
+at the bottom of the Plug-In Viewer window.<!--
+<p><A NAME="KnownLimitations"></A>
+<TABLE BORDER=0 COLS=1 WIDTH="100%" BGCOLOR="#FFCC33" NOSAVE >
+<TR>
+<TD><FONT FACE="Arial,Helvetica"><FONT SIZE=+2>Known
+Limitations with JMStudio</font></font>
+</table>
+-->
+<p>
+<hr><font size=-2>Copyright &copy; 1995-99 Sun Microsystems, Inc.</font>
+<br><font size=-2>All Rights Reserved</font></ol>
+
+</body>
+</html>

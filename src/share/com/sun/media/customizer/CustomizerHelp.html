@@ -1,0 +1,88 @@
+
+<a name="1">
+<h3> Main Functionalities </h3>
+</a>
+This page lists the main functionalities provided by JMF 2.X. With JMF2.X,
+one could playback the media coming from stored data, live captured data or
+real-time stream received from network. Besides, one could also broadcast
+the media over network or export the media to a local file.
+
+<table border=1>
+<tr><td rowspan=3> <b>Media Source</b></td><td>Media files</td><td> source media comes
+from stored files.</td></tr>
+<tr><td>RTP receive</td><td>source media is the real-time stream received from
+network via RTP/RTSP.</td></tr>
+<tr><td>Capture</td><td> source media comes from the capture device, e.g., 
+microphone or camera.</td></tr>
+<tr><td rowspan=3> <b>Media Sink</b> </td><td>Play</td><td> playback, rendering 
+the source media to speaker, monitor, etc. </td></tr>
+<tr><td> RTP Transmit</td><td> Broadcast the source media across network via
+RTP/RTSP </td></tr>
+<tr><td>Transcode</td><td> Export the source media into a file. </td></tr>
+<tr><td rowspan=2><b>Optional Component</b></td><td>Player Bean</td><td>JMF player as a java bean component </td></tr>
+</tr><td>Demo & Tool</td><td> <b>JMStudio</b> is an application demo bundled in JMF2.X. <b>Please note </b> that JMStudio touches a lot of areas of JMF, once it is selected, it will increase the size of target jar file. <br> <b>JMFRegistry</b> is a useful tool bundled in JMF2.X to manage JMF plugin registry.</td></tr>
+</table>
+<br><br>
+
+<b>Option to generate two target jar files </b> is useful if JMF is deployed via <b>JavaWebStart</b>. It will create two target jar files: core_custom.jar  contains all the core classes and plugin_custom.jar contains all the plugable classes. Then, you have to include both jar files into your classpath.
+<br><br>
+
+
+<a name="2">
+<h3> Protocol </h3>
+</a>
+
+This page lists the protocols supported by JMF2.X.
+<table border=1>
+<tr><td>javasound</td><td>Protocol for sound capture, which relies on JavaSound/JDK1.3 </td></tr>
+<tr><td>VFW</td><td>Video for Window. It is a protocol for video capture on Windows platform </td></tr>
+<tr><td>SunVideo</td><td> protocol for video capture on solaris, using SunVideo
+capture card. </td></tr>
+<tr><td>SunVideo+</td><td>protocol for video capture on solaris, using SunVideo Plus catpure card. </td></tr>
+<tr><td>Cloneable/Merging DataSource</td><td>Protocols used to clone data source, and merge multiple tracks</td></tr>
+</table>
+<br>
+<br>
+
+<a name="3">
+<h3> Stored Media Format </h3>
+</a>
+This page lists the media formats supported by JMF2.X.
+<br> MIDI and RMF rely on JavaSound/JDK1.3.
+<br> CDAudio is only supported on Windows platform.
+<br>
+
+<a name="4">
+<h3> Multiplexer  </h3>
+</a>
+This page lists available audio/video multiplexers needed when transcoding.
+<br>
+
+<a name="5">
+<h3> Codec </h3>
+</a>
+This page lists the Audio/Video codecs supported by JMF2.X.
+<table border=1>
+<tr><td>IMA4_MS is the Microsoft version of IMA4.</td></tr>
+<tr><td>GSM_MS is the Microsoft version of GSM.</td></tr>
+<tr><td>JD_xxx means java decoders </td></tr>
+<tr><td>ND_xxx means native decoders </td></tr>
+<tr><td>JE_xxx means java encoders </td></tr>
+<tr><td>NE_xxx means native encoders </td></tr>
+<tr><td>DRTP_xxx means depacketizers </td></tr>
+<tr><td>PRTP_xxx means packetizers </td></tr>
+<tr><td>The IV32 native decoder on windows platform uses VCM interface. </td></tr>
+</table>
+<br>
+
+
+<a name="6">
+<h3> Renderer </h3>
+</a>
+This page lists available audio/video renderers needed when playing back.
+<br><b>Javasound</b> renderer relies on JavaSound/JDK1.3.
+<br><b>XLib</b> and <b>XIL</b> are native renderers on solaris platform.
+<br><b>SunRay</b> is a renderer for SunRay device.
+<br><b>DirectDraw</b> and <b>GDI</b> are native renderers on Windows platform.
+<br>
+

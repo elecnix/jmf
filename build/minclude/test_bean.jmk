@@ -1,0 +1,25 @@
+#
+# @(#)test_bean.jmk	1.1 99/08/25
+# Copyright 1998-1999 Sun Microsystems
+# 
+
+SOURCES_java = \
+	$(TARGDIR)com/ibm/media/bean/multiplayer/ButtonPositionEditor.java \
+	$(TARGDIR)com/ibm/media/bean/multiplayer/DTFrame.java \
+	$(TARGDIR)com/ibm/media/bean/multiplayer/DTMsgBox.java \
+	$(TARGDIR)com/ibm/media/bean/multiplayer/DTWinAdapter.java \
+	$(TARGDIR)com/ibm/media/bean/multiplayer/ImageLabel.java \
+	$(TARGDIR)com/ibm/media/bean/multiplayer/ImageButton.java \
+	$(TARGDIR)com/ibm/media/bean/multiplayer/JMFUtil.java \
+	$(TARGDIR)com/ibm/media/bean/multiplayer/LinksArrayEditor.java \
+	$(TARGDIR)com/ibm/media/bean/multiplayer/MediaArrayEditor.java \
+	$(TARGDIR)com/ibm/media/bean/multiplayer/MediaGroup.java \
+	$(TARGDIR)com/ibm/media/bean/multiplayer/MultiPlayerBean.java \
+	$(TARGDIR)com/ibm/media/bean/multiplayer/RelatedLink.java \
+	$(TARGDIR)com/ibm/media/bean/multiplayer/MultiPlayerBeanBeanInfo.java \
+	$(TARGDIR)com/ibm/media/bean/multiplayer/nls/JMFConst.java \
+	$(TARGDIR)com/ibm/media/bean/multiplayer/nls/JMFConst_en_US.java \
+	$(TARGDIR)com/ibm/media/bean/multiplayer/nls/JMFConst_en.java \
+	$(TARGDIR)com/ibm/media/bean/multiplayer/nls/MultiPlayerBeanInfoResources.java \
+
+

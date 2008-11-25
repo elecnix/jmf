@@ -1,0 +1,4 @@
+Manifest-Version: 1.0
+
+Name: javax/media/bean/playerbean/MediaPlayer.class
+Java-Bean: True

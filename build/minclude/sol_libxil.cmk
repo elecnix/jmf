@@ -1,0 +1,17 @@
+#
+# @(#)sol_libxil.cmk	1.3 99/03/08
+# Copyright 1998 Sun Microsystems, Inc.
+#
+
+SOURCES_c = \
+	$(OBJDIR)\XILRenderer.c \
+	$(OBJDIR)\XILCapture.c
+
+STUBS_NAMES = \
+	com.sun.media.renderer.video.XILRenderer \
+	com.sun.media.protocol.sunvideo.XILCapture
+
+STUBS_CLASSES = \
+	$(TARGDIR)com/sun/media/renderer/video/XILRenderer.class \
+	$(TARGDIR)com/sun/media/protocol/sunvideo/XILCapture.class
+

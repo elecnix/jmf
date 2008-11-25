@@ -1,0 +1,117 @@
+####################################
+# JMF Workspace
+#
+# @(#)README	1.5 01/04/03
+####################################
+
+
+===================
+Source Organization
+===================
+
+build -
+   apidocs - JavaDoc build targets (requires JDK 1.2 to build correctly)
+   minclude - make include files to add your build targets
+   solaris - Solaris build targets
+   linux - Linux build targets
+   win32 - win32 build targets
+   
+doc -
+   You are looking at it right now.
+
+jmapps -
+   JMStudio, JMFRegistry and other tools
+
+src - all JMF sources
+   share - source shared on different platforms
+      javax - javax.* packages
+         javax.media - JMF API
+      com - com.* packages
+         sun - Sun developed packages
+            media
+               codec - Codec packages
+         ibm - IBM developed packages
+      native - cross-platform native libraries
+      hotmedia - IBM HotMedia clue code
+      images - gif's
+      
+   solaris - Solaris only source (some also used in linux build)
+      com - com.* packages
+         sun - Sun developed packages
+            media
+               codec - Codec packages
+         ibm - IBM developed packages
+      native - solaris and/or linux native libraries
+
+   linux - Linux x86 only source
+
+   win32 - Win 32 only source
+
+   x86 - Solaris-x86 only source
+
+test -
+   Samples
+
+
+
+============
+Building JMF
+============
+
+Solaris:
+   Requires:
+      - A JavaSound build, JDK 1.3+ or use the SCSL source.
+      - JDK 1.2.2 or above
+      - Sparc compilers 4.x and above
+      - gnumake
+   Script template: doc/buildinfo/buildjmf.sh-template
+
+Linux:
+   Requires:
+      - A JavaSound build, JDK 1.3+ or use the SCSL source.
+      - JDK 1.2.2 or above
+      - GNU C/C++ compilers
+      - GNU make
+   Script template: doc/buildinfo/buildjmf.sh-template
+
+Windows:
+   Requires:
+      - A JavaSound build, JDK 1.3+ or use the SCSL source.
+      - JDK 1.2.2 or above
+      - Visual Studio 6.0 or above.
+   Script template: doc/buildinfo/buildjmf.bat-template
+
+Modify the script templates to adapt to your environment.
+
+
+
+===========
+Running JMF
+===========
+
+Solaris:
+   - set your CLASSPATH to:
+	$JMFHOME/build/solaris/image/lib/jmf.jar:$JMFHOME/build/solaris/image/lib/sound.jar
+   - add to your LD_LIBRARY_PATH:
+	$JMFHOME/build/solaris/image/lib
+
+Linux:
+   - set your CLASSPATH to:
+	$JMFHOME/build/linux/image/lib/jmf.jar:$JMFHOME/build/linux/image/lib/sound.jar
+   - add to your LD_LIBRARY_PATH:
+	$JMFHOME/build/linux/image/lib
+
+Windows:
+   - set your CLASSPATH to:
+        %JMFHOME%\build\win32\image\lib\jmf.jar;%JMFHOME%\build\win32\image\lib\sound.jar
+   - add to your path:
+	%JMFHOME%\build\win32\image\lib
+
+
+JMStudio is a demo app showcasing the capabilities of JMF.
+doc/buildinfo/runjmf.sh-template doc/buildinfo/runjmf.bat-template are 
+sample scripts to run JMStudio.
+
+JMFRegistry is an app to view the plugins installed on your JMF
+installation.
+

@@ -1,0 +1,149 @@
+[PackageForTheWeb]
+Version=2.0
+
+[Options]
+Title=JavaMediaFramework2.1.1e
+Company=Sun Microsystems, Inc.
+CompanyEMail=jmf-comments@sun.com
+BasePath=C:\TEMP\JMF-2.0\media\DefaultMedia\Disk Images\disk1
+ImportPath=
+UseRTF=0
+SaveFiles=0
+SubFolders=1
+ApplicationName=Java Media Framework 2.1.1e
+Description=Java Media Framework 2.1.1e API implementation
+Comments=
+Notice=
+Version=2.1.1e
+OutputSpec=C:\TEMP\jmf-2_1_1e-win.exe
+GUIDs=0
+Type=2
+Compress=1
+Sign=0
+Transfer=0
+Files=15
+
+[Engine]
+Setup=SETUP.EXE
+
+[Web Page]
+Generate=1
+Template=
+MSClient=
+NClient=
+
+[Runtime]
+Welcome=
+License=
+Prompt=
+Password=
+DefaultPath=
+Language=
+WindowStyle=0
+Options=2
+Execute=SETUP.EXE
+CmdLine=/SMS
+
+[Extension]
+Server=
+Calls=0
+
+[Code Signing]
+CompanyURL=
+SpecFile=
+KeyFile=
+Method=0
+
+; ~~~~~~~~~~ File Section ~~~~~~~~~~~
+[SubFolders]
+Count=0
+
+[File 1]
+Name=os.dat
+Path=C:\TEMP\JMF-2.0\media\DefaultMedia\Disk Images\disk1\
+Flags=1
+Disk=0
+
+[File 2]
+Name=_ISDEL.EXE
+Path=C:\TEMP\JMF-2.0\media\DefaultMedia\Disk Images\disk1\
+Flags=589825
+Disk=0
+
+[File 3]
+Name=SETUP.EXE
+Path=C:\TEMP\JMF-2.0\media\DefaultMedia\Disk Images\disk1\
+Flags=589825
+Disk=0
+
+[File 4]
+Name=lang.dat
+Path=C:\TEMP\JMF-2.0\media\DefaultMedia\Disk Images\disk1\
+Flags=1
+Disk=0
+
+[File 5]
+Name=_INST32I.EX_
+Path=C:\TEMP\JMF-2.0\media\DefaultMedia\Disk Images\disk1\
+Flags=524289
+Disk=0
+
+[File 6]
+Name=_SETUP.DLL
+Path=C:\TEMP\JMF-2.0\media\DefaultMedia\Disk Images\disk1\
+Flags=655377
+Disk=0
+
+[File 7]
+Name=_sys1.cab
+Path=C:\TEMP\JMF-2.0\media\DefaultMedia\Disk Images\disk1\
+Flags=2097153
+Disk=0
+
+[File 8]
+Name=setup.ins
+Path=C:\TEMP\JMF-2.0\media\DefaultMedia\Disk Images\disk1\
+Flags=1
+Disk=0
+
+[File 9]
+Name=setup.bmp
+Path=C:\TEMP\JMF-2.0\media\DefaultMedia\Disk Images\disk1\
+Flags=1
+Disk=0
+
+[File 10]
+Name=_user1.cab
+Path=C:\TEMP\JMF-2.0\media\DefaultMedia\Disk Images\disk1\
+Flags=2097153
+Disk=0
+
+[File 11]
+Name=DATA.TAG
+Path=C:\TEMP\JMF-2.0\media\DefaultMedia\Disk Images\disk1\
+Flags=1
+Disk=0
+
+[File 12]
+Name=SETUP.INI
+Path=C:\TEMP\JMF-2.0\media\DefaultMedia\Disk Images\disk1\
+Flags=1
+Disk=0
+
+[File 13]
+Name=data1.cab
+Path=C:\TEMP\JMF-2.0\media\DefaultMedia\Disk Images\disk1\
+Flags=2097153
+Disk=0
+
+[File 14]
+Name=layout.bin
+Path=C:\TEMP\JMF-2.0\media\DefaultMedia\Disk Images\disk1\
+Flags=1
+Disk=0
+
+[File 15]
+Name=setup.lid
+Path=C:\TEMP\JMF-2.0\media\DefaultMedia\Disk Images\disk1\
+Flags=1
+Disk=0

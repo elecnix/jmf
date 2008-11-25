@@ -1,0 +1,15 @@
+#
+# @(#)win32_libdaudc.cmk	1.1 00/09/10
+#
+
+SOURCES_cc = \
+	$(OBJDIR)\DirectSoundCapturer.cc
+
+STUBS_NAMES = \
+	com.sun.media.protocol.dsound.DSound
+
+STUBS_CLASSES = \
+	$(TARGDIR)com/sun/media/protocol/dsound/DSound.class
+
+
+

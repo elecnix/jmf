@@ -1,0 +1,18 @@
+#
+# @(#)win32_libdaud.cmk	1.4 00/09/10
+#
+
+SOURCES_cc = \
+	$(OBJDIR)\DirectSoundRenderer.cc \
+	
+
+STUBS_NAMES = \
+	com.sun.media.renderer.audio.DirectAudioRenderer \
+	
+
+STUBS_CLASSES = \
+	$(TARGDIR)com/sun/media/renderer/audio/DirectAudioRenderer.class \
+	
+
+
+

@@ -1,0 +1,39 @@
+#
+# @(#)sol_libmpx.cmk	1.1 99/07/19
+#
+
+#SOURCES_cc = \
+#	$(OBJDIR)\yrc.cc
+
+SOURCES_c = \
+	$(OBJDIR)\ln_cmd.c \
+	$(OBJDIR)\ln_11172.c \
+	$(OBJDIR)\ln_vseq.c \
+	$(OBJDIR)\ln_dmx.c \
+	$(OBJDIR)\ln_io.c \
+	$(OBJDIR)\ln_aseq.c \
+	$(OBJDIR)\ln_disp.c \
+	$(OBJDIR)\ln_main.c \
+	$(OBJDIR)\mpx_api.c \
+	$(OBJDIR)\mpx_cmd.c \
+	$(OBJDIR)\mp_cnvc.c \
+	$(OBJDIR)\mp_aud.c \
+	$(OBJDIR)\mp_sidct.c \
+	$(OBJDIR)\mp_tabl.c \
+	$(OBJDIR)\mp_disp.c \
+	$(OBJDIR)\mp_rpb.c \
+	$(OBJDIR)\mp_ri.c \
+	$(OBJDIR)\mp_rndmb.c \
+	$(OBJDIR)\mp_rhdrs.c \
+	$(OBJDIR)\JmpxNative.c
+
+STUBS_NAMES = \
+	com.sun.media.codec.video.jmpx.Jmpx \
+	com.sun.media.codec.video.jmpx.MpxThread \
+	com.sun.media.codec.video.jmpx.DataThread
+
+STUBS_CLASSES = \
+	$(TARDIR)com/sun/media/codec/video/jmpx/Jmpx.class \
+	$(TARDIR)com/sun/media/codec/video/jmpx/MpxThread.class \
+	$(TARDIR)com/sun/media/codec/video/jmpx/DataThread.class
+

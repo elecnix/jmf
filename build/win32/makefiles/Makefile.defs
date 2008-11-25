@@ -1,0 +1,99 @@
+#
+# @(#)Makefile.defs	1.3 99/04/12
+# Copyright 1998 Sun Microsystems, Inc.
+#
+#
+# If JAVAHOME is defined in the environment, use it.  Otherwise,
+# set it to the default.
+#
+
+ifeq ($(strip $(JAVAHOME)),)
+	JAVAHOME := G:/net/capra/export/local/jdk1.1.5/win32
+else
+	JAVAHOME := $(JAVAHOME)
+endif
+
+ifeq ($(strip $(JAVACOMPILER)),)
+	JAVACOMPILER := javac
+endif
+
+ifeq ($(strip $(MKSHOME)),)
+	MKSHOME := C:/MKSNT
+else
+	MKSHOME := $(MKSHOME)
+endif
+
+#
+# If JAVA_BUILD_FLAG is defined in the environment, use it.  Otherwise,
+# set it to the default.
+#
+ifeq ($(strip $(JAVA_BUILD_FLAG)),)
+	JAVA_BUILD_FLAG := -g
+else
+	JAVA_BUILD_FLAG := $(JAVA_BUILD_FLAG)
+endif
+
+ifeq ($(strip $(DESTDIR)),)
+	DESTDIR := $(TOPDIR)/build/$(PLATFORM)/lib
+else
+	DESTDIR := $(DESTDIR)
+endif
+
+ifeq ($(MESSAGES),)
+MESSAGES = BRIEF
+endif
+
+ifeq ($(MESSAGES),VERBOSE)
+VERBOSE = 1
+else
+CMD_PREFIX = @
+.SILENT:
+endif
+
+ifeq ($(MESSAGES),BRIEF)
+BRIEF = 1
+endif
+
+ifdef BRIEF
+ECHO = @echo ---
+else
+ECHO = @echo >nul
+endif
+
+#
+# Build date
+#
+BUILDDATE := $(subst ,,$(shell $(MKSHOME)/date))
+
+
+PATH_DELIMITER := \;
+
+#
+# Build environment variables
+#
+ifeq ($(strip $(SOUNDCLASSES)),)
+        SOUNDCLASSES := G:/net/capra/export/JavaMedia/Sound/workspaces/JavaSound-JMF/build/win32/lib
+endif
+
+JAVA = $(CMD_PREFIX)$(JAVAHOME)/bin/java
+#JAVAC = $(CMD_PREFIX)$(JAVAHOME)/bin/$(JAVACOMPILER)
+JAVAC = $(JAVAHOME)/bin/$(JAVACOMPILER)
+JAVAH = $(CMD_PREFIX)$(JAVAHOME)/bin/javah
+JAR = $(CMD_PREFIX)$(JAVAHOME)/bin/jar
+CLASSDIR = $(DESTDIR)
+CLASSPATH = $(DESTDIR)\;$(SRCDIR)\;$(SRCREFDIR)\;$(SOUNDCLASSES)\;$(JAVAHOME)/lib/classes.zip
+TARGDIR = OBJ
+TARGDIR_g = OBJ_g
+STUBDIR = STUBS
+
+#
+# Default command paths
+#
+
+INST = $(CMD_PREFIX)$(MKSHOME)/cp -f 
+MKDIR = $(CMD_PREFIX)$(MKSHOME)/mkdir -p
+RM = $(CMD_PREFIX)$(MKSHOME)/rm -f
+TOUCH = $(CMD_PREFIX)$(MKSHOME)/touch
+CP = $(CMD_PREFIX)$(MKSHOME)/cp -f 
+CHMOD = $(CMD_PREFIX)$(MKSHOME)/chmod
+SED = $(CMD_PREFIX)$(MKSHOME)/sed

@@ -1,0 +1,15 @@
+#
+# @(#)libjmfjawt.cmk	1.1 02/12/06
+# Copyright 2002 Sun Microsystems, Inc.
+
+SOURCES_c = \
+	$(OBJDIR)\DrawingSurfaceJAWT.c
+	
+
+STUBS_NAMES = \
+	com.sun.media.DrawingSurfaceJAWT
+
+STUBS_CLASSES = \
+	$(TARGDIR)com/sun/media/DrawingSurfaceJAWT.class
+
+

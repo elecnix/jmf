@@ -1,0 +1,137 @@
+#
+#  @(#)Makefile.native.include	1.10 01/04/04
+#
+
+include $(TOPDIR)/build/$(PLATFORM)/makefiles/Makefile.defs
+
+INSTDIR = $(DESTDIR)
+#CXXFLAGS = -noex -xO4
+#CFLAGS = -xO4
+
+CXX = CC
+
+solaris_CPPFLAGS += -DSVR4 -DBIG_ENDIAN -DJM_BIG_ENDIAN -DSOLARIS -DSUN \
+	-I$(OPENWINHOME)/include \
+	-I$(JAVAHOME)/include \
+	-I$(JAVAHOME)/include/solaris \
+	-I$(JAVAHOME)/include-old \
+	-I$(JAVAHOME)/include-old/solaris \
+	-I$(TOPDIR)/src/share/native/libjmutil \
+	-I/usr/dt/include \
+	-I$(OBJDIR) \
+	$(DEFINES)
+
+CPPFLAGS += $($(PLATFORM)_CPPFLAGS)
+
+LDFLAGS += \
+	-L$(JAVAHOME)/lib/sparc
+
+LDFLAGS.so += \
+	-L$(DESTDIR)
+
+SOURCES_REF.cc = $(SOURCES_cc:$(OBJDIR)\\%=$(SRCDIR)/$(SUBDIR)/%)
+SOURCES_REF.hh = $(SOURCES_hh:$(OBJDIR)\\%=$(SRCDIR)/$(SUBDIR)/%)
+SOURCES_REF.c = $(SOURCES_c:$(OBJDIR)\\%=$(SRCDIR)/$(SUBDIR)/%)
+SOURCES_REF.h = $(SOURCES_h:$(OBJDIR)\\%=$(SRCDIR)/$(SUBDIR)/%)
+
+SOURCES += \
+	$(SOURCES_REF.cc) \
+	$(SOURCES_REF.hh) \
+	$(SOURCES_REF.c) \
+	$(SOURCES_REF.h) \
+	$(SOURCES_REF.cpp) \
+	$(SOURCES_REF.s) \
+	$(SOURCES_STUBS.h)
+
+ifneq ($(STUBS_classes),)
+SOURCES += $(SOURCES_STUBS.c)
+endif
+
+ifeq ($(DEBUG),1)
+OBJDIR = obj_g
+else
+OBJDIR = obj
+endif
+
+OBJECTS += \
+	$(OBJECTS_other) \
+	$(SOURCES_c:$(OBJDIR)\\%.c=$(OBJDIR)/%.o) \
+	$(SOURCES_cc:$(OBJDIR)\\%.cc=$(OBJDIR)/%.o)
+
+ifeq ($(PROGRAM),)
+ifeq ($(DEBUG),1)
+TARGLIBRARY = $(OBJDIR)/$(LIBRARY)_g.so
+DESTLIBRARY = $(DESTDIR)/$(LIBRARY)_g.so
+OPT = -g
+else
+TARGLIBRARY = $(OBJDIR)/$(LIBRARY).so
+DESTLIBRARY = $(DESTDIR)/$(LIBRARY).so
+OPT = -xO4
+endif
+endif
+
+STUBS_CLASSFILES = $(STUBS_CLASSES:%=$(DESTDIR)/%)
+
+TARGPROG = $(PROGRAM:%:%=$(TOPDIR)/build/$(PLATFORM)/bin/%)
+
+ifeq ($(PROGRAM),)
+INSTDIR = $(DESTDIR)
+INSTTARG = $(TARGLIBRARY)
+MAKESTUBS = STUBS
+else
+INSTDIR = $(TOPDIR)/build/$(PLATFORM)/bin
+INSTTARG = $(TARGPROG)
+MAKESTUBS =
+endif
+
+.KEEP_STATE:
+
+all: announce $(OTHERS) $(MAKESTUBS) $(SOURCES) $(OBJECTS) $(TARGLIBRARY) $(TARGPROG)
+
+STUBS: $(OBJDIR) $(OBJDIR)/dummyfile
+
+$(OBJDIR)/dummyfile: $(STUBS_CLASSFILES)
+	$(ECHO) -- Generating STUBS $(STUBS_NAMES)
+	$(JAVAH) -d $(OBJDIR) -jni -classpath $(CLASSPATH) $(STUBS_NAMES)
+	@echo I said dummy, didnt I. >$@
+
+$(TARGLIBRARY): $(OBJECTS)
+	$(ECHO) -- Linking $(TARGLIBRARY)
+	$(ECHO) -- Destdir = $(DESTDIR)
+	$(CMD_PREFIX)$(LD) -G -o $@ $(OBJECTS) $(ULIBS) $(LDFLAGS.so) $(LDLIBS.so) 
+
+$(TARGPROG): $(OBJECTS)
+	$(ECHO) -- Building executable $(TARGPROG)
+	$(CMD_PREFIX)$(LINK.c) $(LDFLAGS) -o $@ $(OBJECTS) $(ULIBS) $(LDLIBS)
+
+$(OBJDIR)/%.o: $(SRCDIR)/$(SUBDIR)/%.c
+	$(ECHO) -- Compiling $<
+	$(CMD_PREFIX)$(COMPILE.c) $(OPT) -xCC -o $@ $<
+
+$(OBJDIR)/%.o: $(SRCDIR)/$(SUBDIR)/%.cc
+	$(ECHO) -- Compiling $<
+	$(CMD_PREFIX)$(COMPILE.cc) $(OPT) -noex -o $@ $<
+
+$(OBJDIR)/%.o: $(SRCDIR)/$(SUBDIR)/%.s
+	$(ECHO) -- Compiling $<
+	$(CMD_PREFIX)$(COMPILE.s) -P -o $@ $<
+
+$(OBJDIR):
+	$(ECHO) -- Creating $@
+	$(MKDIR) $@
+
+install: all $(DESTLIBRARY) $(DESTPROGRAM)
+
+$(DESTLIBRARY): $(TARGLIBRARY)
+	$(ECHO) -- Copying $(TARGLIBRARY) to $(DESTLIBRARY) 
+	$(INST) $(TARGLIBRARY) $(DESTDIR)
+
+announce:
+	$(ECHO) DIRECTORY $(SUBDIR)
+
+clean:
+	$(RM) $(OBJDIR)/*
+	$(RM) $(OBJDIR)_g/*
+
+
+

@@ -1,0 +1,20 @@
+#
+# @(#)win32_libds.cmk	1.6 99/03/10
+#
+
+SOURCES_cc = \
+	$(OBJDIR)\ds.cc \
+	$(OBJDIR)\filter2stream.cc
+
+SOURCES_rc = \
+	$(OBJDIR)\ds.rc
+
+STUBS_NAMES = \
+	com.ibm.media.protocol.ds.DataSource \
+	com.ibm.media.protocol.ds.DSSourceStream
+
+STUBS_CLASSES = \
+	$(TARGDIR)com/ibm/media/protocol/ds/DataSource.class \
+	$(TARGDIR)com/ibm/media/protocol/ds/DSSourceStream.class
+
+

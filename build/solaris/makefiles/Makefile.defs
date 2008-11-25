@@ -1,0 +1,113 @@
+#
+# @(#)Makefile.defs	1.8 01/03/27
+# Copyright 1998 Sun Microsystems, Inc.
+#
+
+#
+# If JAVAHOME is defined in the environment, use it.  Otherwise,
+# set it to the default.
+#
+
+ifeq ($(strip $(JAVAHOME)),)
+	JAVAHOME := /net/capra/export/local/jdk1.2.2/solaris
+else
+	JAVAHOME := $(JAVAHOME)
+endif
+
+#
+# If JAVA_BUILD_FLAG is defined in the environment, use it.  Otherwise,
+# set it to the default.
+#
+ifeq ($(strip $(JAVA_BUILD_FLAG)),)
+	JAVA_BUILD_FLAG := -g
+else
+	JAVA_BUILD_FLAG := $(JAVA_BUILD_FLAG)
+endif
+
+ifeq ($(strip $(DESTDIR)),)
+	DESTDIR := $(TOPDIR)/build/$(PLATFORM)/lib
+else
+	DESTDIR := $(DESTDIR)
+endif
+
+#
+# If SUNSOL_BUILD_FLAG is defined in the environment, use it.  Otherwise,
+# set it to the default.
+#
+ifeq ($(strip $(SUNSOL_BUILD_FLAG)),)
+	SUNSOL_BUILD_FLAG := -g
+else
+	SUNSOL_BUILD_FLAG := $(JAVA_BUILD_FLAG)
+endif
+
+#
+# Build date
+#
+BUILDDATE := $(shell /bin/date)
+
+#
+# Define the OS version type.
+#
+OSVER := $(shell /bin/uname -r)
+ifeq (5.6, $(findstring 5.6, $(OSVER)))
+CPPFLAGS += -DSOLARIS_5_6
+endif
+ifeq (5.7, $(findstring 5.7, $(OSVER)))
+CPPFLAGS += -DSOLARIS_5_6
+endif
+
+ifeq ($(DEBUGBUILD),)
+DEBUGBUILD = true
+endif
+
+ifeq ($(MESSAGES),)
+MESSAGES = BRIEF
+endif
+
+ifeq ($(MESSAGES),VERBOSE)
+VERBOSE = 1
+else
+CMD_PREFIX = @
+.SILENT:
+endif
+
+ifeq ($(MESSAGES),BRIEF)
+BRIEF = 1
+endif
+
+ifdef BRIEF
+ECHO = @echo --
+else
+ECHO = @echo >/dev/null
+endif
+
+PATH_DELIMITER := :
+
+#
+# Build environment variables
+#
+ifeq ($(strip $(SOUNDCLASSES)),)
+        SOUNDCLASSES := /net/capra/export/JavaMedia/Sound/workspaces/JavaSound-JMF/build/solaris/lib
+endif
+
+
+THREADS_FLAG = native
+JAVA = $(CMD_PREFIX)$(JAVAHOME)/bin/java
+JAVAC = $(JAVAHOME)/bin/javac -J-mx64m
+JAVAH = $(CMD_PREFIX)$(JAVAHOME)/bin/javah
+JAVADOC = $(CMD_PREFIX)$(JAVAHOME)/bin/javadoc
+JAR = $(CMD_PREFIX)$(JAVAHOME)/bin/jar
+CLASSDIR = $(DESTDIR)
+CLASSPATH = $(DESTDIR):$(SRCDIR):$(SOUNDCLASSES)/sound.jar:$(JAVAHOME)/lib/classes.zip
+
+#
+# Default command paths
+#
+
+INST = $(CMD_PREFIX)/usr/ucb/install
+MKDIR = $(CMD_PREFIX)/bin/mkdir -p
+RM = $(CMD_PREFIX)/bin/rm -f
+TOUCH = $(CMD_PREFIX)/bin/touch
+CP = $(CMD_PREFIX)/bin/cp -f
+CHMOD = $(CMD_PREFIX)/bin/chmod
+SED = $(CMD_PREFIX)/bin/sed

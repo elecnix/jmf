@@ -1,0 +1,17 @@
+#
+# @(#)test_registry.jmk	1.5 99/11/18
+# Copyright 1998-1999 Sun Microsystems
+# 
+
+SOURCES_java = \
+	$(TARGDIR)JMFInit.java \
+	$(TARGDIR)JMFRegistry.java \
+	$(TARGDIR)PMPanel.java \
+	$(TARGDIR)VectorPanel.java \
+	$(TARGDIR)VectorEditor.java \
+	$(TARGDIR)SettingsPanel.java \
+	$(TARGDIR)PIMPanel.java \
+	$(TARGDIR)PerTypePanel.java \
+	$(TARGDIR)CDMPanel.java \
+	$(TARGDIR)MimePanel.java
+

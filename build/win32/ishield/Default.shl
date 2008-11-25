@@ -1,0 +1,18 @@
+[Folder4]
+Type=Common
+DisplayText=PRODUCT_NAME
+Comments=
+
+[Data]
+Folder3=<FOLDER_STARTUP>
+Folder4=Folder2\JMF 2.1.1
+Group0=Main
+Group1=Startup
+Folder0=<FOLDER_DESKTOP>
+Folder1=<FOLDER_STARTMENU>
+Folder2=<FOLDER_PROGRAMS>
+
+[Info]
+Type=ShellObject
+Version=1.00.000
+

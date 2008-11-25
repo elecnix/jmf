@@ -1,0 +1,35 @@
+#
+# @(#)libjmutil.cmk	1.12 00/10/10
+#
+
+SOURCES_c = \
+	$(OBJDIR)\jni-util.c \
+	$(OBJDIR)\WindowUtil.c
+
+
+SOURCES_cc = \
+	$(OBJDIR)\YuvToRgb.cc \
+	$(OBJDIR)\New.cc \
+	$(OBJDIR)\ColorUtils.cc \
+	$(OBJDIR)\JMUtil.cc
+
+#	$(OBJDIR)\RgbConverter.cc \
+
+STUBS_NAMES = \
+	com.sun.media.util.WindowUtil \
+	com.sun.media.NBA \
+	com.sun.media.codec.video.colorspace.YUVToRGB \
+	com.sun.media.protocol.CachedPullSourceStream \
+	com.sun.media.util.Registry
+
+
+STUBS_CLASSES = \
+	$(TARGDIR)com/sun/media/util/WindowUtil.class \
+	$(TARGDIR)com/sun/media/NBA.class \
+	$(TARGDIR)com/sun/media/codec/video/colorspace/YUVToRGB.class \
+	$(TARGDIR)com/sun/media/protocol/CachedPullSourceStream.class \
+	$(TARGDIR)com/sun/media/util/Registry.class
+
+#	com.sun.media.codec.video.colorspace.NativeRGBConverter \
+
+#	$(TARGDIR)com/sun/media/codec/video/colorspace/NativeRGBConverter.class \

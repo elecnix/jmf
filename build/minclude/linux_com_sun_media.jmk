@@ -1,0 +1,34 @@
+#
+# @(#)linux_com_sun_media.jmk	1.5 00/10/09
+# Copyright 2000 Sun Microsystems, Inc.
+#
+
+# Files in the solaris directory
+
+SOURCES.platform.java += \
+	renderer/video/XLibRenderer.java \
+	codec/video/jmpx/Jmpx.java \
+	codec/video/jmpx/JmpxAckNotifyEvent.java \
+	codec/video/jmpx/JmpxAudio.java \
+	codec/video/jmpx/JmpxEvent.java \
+	codec/video/jmpx/JmpxFileDoneEvent.java \
+	codec/video/jmpx/JmpxListener.java \
+	codec/video/jmpx/JmpxSizeChangeEvent.java \
+	codec/video/jmpx/JmpxStatsUpdateEvent.java \
+	content/video/mpeg/Handler.java
+
+# Files specific to Linux
+
+SOURCES.platform2.java += \
+	protocol/v4l/VCapability.java \
+	protocol/v4l/VChannel.java \
+	protocol/v4l/VPicture.java \
+	protocol/v4l/VTuner.java \
+	protocol/v4l/V4LCapture.java \
+	protocol/v4l/DataSource.java \
+	protocol/v4l/V4LSourceStream.java \
+	protocol/v4l/V4LDeviceQuery.java \
+	renderer/audio/DirectAudioRenderer.java \
+	BuildInfo.java \
+	util/Arch.java
+

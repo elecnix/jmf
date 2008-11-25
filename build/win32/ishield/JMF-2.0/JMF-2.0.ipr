@@ -1,0 +1,55 @@
+[Language]
+LanguageSupport0=0009
+
+[OperatingSystem]
+OSSupport=0000000000010010
+
+[Data]
+CurrentMedia=DefaultMedia
+set_mifserial=
+ProductName=Java Media Framework 2.1.1e
+CurrentComponentDef=Default.cdf
+set_dlldebug=No
+AppExe=
+DevEnvironment=Microsoft Visual J++
+set_mif=No
+set_testmode=No
+Instructions=Instructions.txt
+EmailAddresss=jmf-comments@sun.com
+SummaryText=
+Department=Java Media
+Type=Internet Application
+Author=Sun Microsystems, Inc.
+HomeURL=http://java.sun.com/products/java-media/jmf/2.0/
+InstallRoot=C:\j2\build\win32\ishield\JMF-2.0
+set_level=Level 3
+InstallationGUID=f8390ee2-2588-11d1-a8c6-00805f3107c0
+Version=2.1.1e
+set_miffile=Status.mif
+set_args=
+set_maxerr=50
+Notes=Notes.txt
+CurrentFileGroupDef=Default.fdf
+set_dllcmdline=
+set_warnaserr=Yes
+Copyright=Copyright (c) 2003
+set_preproc=
+Category=Accounting
+CurrentPlatform=
+set_crc=Yes
+set_maxwarn=50
+Description=Description.txt
+CompanyName=Sun Microsystems, Inc.
+CurrentLanguage=English
+set_compileb4build=No
+
+[MediaInfo]
+mediadata0=DefaultMedia/Media\DefaultMedia
+
+[General]
+PassData=
+ReadOnly=N
+Type=INSTALLMAIN
+Version=1.10.000
+PassOn=N
+

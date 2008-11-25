@@ -1,0 +1,16 @@
+/*
+ * @(#)BuildInfo.template	1.4 02/08/21
+ * This class is automatically generated while building JMF.  It is
+ * used to provide information about a JMF build.
+ */
+
+package com.sun.media;
+
+public class BuildInfo {
+    public static String date = "build-date";
+
+    public static void main(String [] args) {
+	System.out.println("JMF Version : " + javax.media.Manager.getVersion() + "\n" +
+			   "Build Date  : " + date);
+    }
+}

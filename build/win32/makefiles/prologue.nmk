@@ -1,0 +1,112 @@
+#
+# @(#)prologue.nmk	1.12 99/01/13
+# Copyright 1998 Sun Microsystems, Inc.
+#
+
+INSTDIR = $(DESTDIR)
+WRAPDIR = $(DESTDIR)/com/sun/media/renderer/video
+
+IMAGEGEN_java = $(TOPDIR)\src\share\com\sun\media\util\ImageGen.java
+IMAGEGEN_class = $(DESTDIR)\ImageGen.class
+
+IMAGES1 = $(IMAGES1_file)
+IMAGES2 = $(IMAGES2_file)
+
+IMAGELIB_dir = $(TOPDIR)\src\share\com\sun\media\ui
+IMAGELIB_java = $(IMAGELIB_dir)\ImageLib.java
+
+HOTMEDIA_DIR = $(DESTDIR)\com\ibm\media\content\application\mvr
+
+CODECLIB_DST = $(DESTDIR)\codecLib
+
+# Disabled g728, g729, g729a codecs
+#CODECLIB = g728 g729 g729a mpa
+#CODECLIB_DIR = $(CODECLIB_DST)\g728 $(CODECLIB_DST)\g729 $(CODECLIB_DST)\g729a $(CODECLIB_DST)\mpa
+
+CODECLIB = mpa
+CODECLIB_DIR = $(CODECLIB_DST)\mpa
+
+all:  $(IMAGEGEN_class) $(IMAGELIB_java) BUILDINFO COPYHOTMEDIA COPYCODECS
+
+BUILDINFO: FORCE
+	$(ECHO) ---- Creating BuildInfo
+	@builder > $(TOPDIR)\src\win32\com\sun\media\BuildInfo.java
+
+
+
+MPEGSTUFF: FORCE
+	$(ECHO) ---- Copying MPEG DLLs
+	$(HIDE)copy $(TOPDIR)\src\share\native\libmpega\mpegd_95.lib $(TOPDIR)\build\win32\native\libmpega >tmp
+	$(HIDE)copy $(TOPDIR)\src\share\native\libmpega\mpegd_95.dll $(DESTDIR) >tmp
+	$(HIDE)del tmp
+
+HOTMEDIA: $(HOTMEDIA_DIR)
+	$(ECHO) ---- Copying hotmedia files
+	$(HIDE)copy $(TOPDIR)\src\share\hotmedia\*.class $(DESTDIR) > tmp
+	$(HIDE)copy $(TOPDIR)\src\share\hotmedia\com\ibm\media\content\application\mvr\*.class $(DESTDIR)\com\ibm\media\content\application\mvr > tmp
+
+!if "$(QUICKBUILD)" == "TRUE"
+
+COPYHOTMEDIA: $(HOTMEDIA_DIR)
+
+$(HOTMEDIA_DIR):
+	$(HIDE)if not exist $(DESTDIR)\com md $(DESTDIR)\com
+	$(HIDE)if not exist $(DESTDIR)\com\ibm md $(DESTDIR)\com\ibm
+	$(HIDE)if not exist $(DESTDIR)\com\ibm\media md $(DESTDIR)\com\ibm\media
+	$(HIDE)if not exist $(DESTDIR)\com\ibm\media\content md $(DESTDIR)\com\ibm\media\content
+	$(HIDE)if not exist $(DESTDIR)\com\ibm\media\content\application md $(DESTDIR)\com\ibm\media\content\application
+	$(HIDE)if not exist $(DESTDIR)\com\ibm\media\content\application\mvr md $(DESTDIR)\com\ibm\media\content\application\mvr
+	@$(MAKE) -nologo HOTMEDIA
+
+COPYCODECS: $(TOPDIR)\build\win32\lib\codecLib
+
+$(DESTDIR)\codecLib:
+	$(HIDE)md $(DESTDIR)\codecLib
+	$(HIDE)md $(DESTDIR)\codecLib\mpa
+	@$(MAKE) -nologo $(CODECLIB)
+
+!else
+
+COPYCODECS: $(CODECLIB)
+
+COPYHOTMEDIA: HOTMEDIA
+
+$(HOTMEDIA_DIR):
+	$(HIDE)if not exist $(DESTDIR)\com md $(DESTDIR)\com
+	$(HIDE)if not exist $(DESTDIR)\com\ibm md $(DESTDIR)\com\ibm
+	$(HIDE)if not exist $(DESTDIR)\com\ibm\media md $(DESTDIR)\com\ibm\media
+	$(HIDE)if not exist $(DESTDIR)\com\ibm\media\content md $(DESTDIR)\com\ibm\media\content
+	$(HIDE)if not exist $(DESTDIR)\com\ibm\media\content\application md $(DESTDIR)\com\ibm\media\content\application
+	$(HIDE)if not exist $(DESTDIR)\com\ibm\media\content\application\mvr md $(DESTDIR)\com\ibm\media\content\application\mvr
+
+!endif
+
+$(CODECLIB): $(CODECLIB_DIR)
+	$(ECHO) ---- Copying codecLib $@
+	$(HIDE)copy $(TOPDIR)\src\share\codecLib\$(@)\*.class $(DESTDIR)\codecLib\$@ > tmp
+	$(HIDE)del tmp
+
+$(CODECLIB_DIR):
+	$(HIDE)md $(DESTDIR)\codecLib
+	$(HIDE)md $(DESTDIR)\codecLib\mpa
+
+FORCE:
+
+
+#
+# Compile the ImageGen program
+#
+$(IMAGEGEN_class): $(IMAGEGEN_java)
+	$(ECHO) ---- Compiling $(IMAGEGEN_java)
+	$(JAVAC) $(IMAGEGEN_java)
+
+#
+# Generate the ImageLib generic interface
+#
+$(IMAGELIB_java): $(IMAGEGEN_class)
+	$(ECHO) ---- Generating image library $@
+	$(JAVA) -classpath $(CLASSPATH) ImageGen \
+		-d $(IMAGELIB_dir) com.sun.media.ui.ImageLib $(IMAGES1) $(IMAGES2)
+
+
+install: all

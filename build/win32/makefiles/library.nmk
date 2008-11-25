@@ -1,0 +1,129 @@
+#
+# @(#)library.nmk	1.10 00/03/30
+#
+
+!ifndef MSDEVHOME
+MSDEVHOME = C:\MSDEV
+!endif
+
+
+!ifndef OPTFLAG
+OPTFLAG = -Ox -G5
+!endif
+
+CPPFLAGS = -nologo -DWIN32 -DLITTLE_ENDIAN -DJM_LITTLE_ENDIAN \
+	-I$(DXMEDIA)\include \
+	-I$(DXMEDIA)\classes\base \
+        -I$(JAVAHOME)\include \
+        -I$(JAVAHOME)\include\win32 \
+        -I$(JAVAHOME)\include-old \
+        -I$(JAVAHOME)\include-old\win32 \
+	-I$(MSDEVHOME)\include \
+	-I$(TOPDIR)\src\share\native\libjmutil \
+	-I$(OBJDIR) \
+	$(OPTFLAG) -c $(DEFINES)
+
+LINKFLAGS = -nologo \
+	/LIBPATH:$(JAVAHOME)\lib\win32 \
+	/LIBPATH:$(DXMEDIA)\lib \
+	/LIBPATH:$(MSDEVHOME)\lib \
+	/LIBPATH:$(JAVAHOME)\lib
+
+!ifdef DEBUG
+LINKFLAGS = $(LINKFLAGS) /debug
+!endif
+
+!ifdef DEBUG
+OBJDIR = OBJ_g
+!else
+OBJDIR = OBJ
+!endif
+
+LINKFLAGS = $(LINKFLAGS) /LIBPATH:$(TOPDIR)\build\win32\native\libjmutil\$(OBJDIR)
+
+!ifdef LIBRARY
+TARGLIBRARY = $(OBJDIR)\$(LIBRARY)
+!endif
+
+CL = $(HIDE)$(MSDEVHOME)\bin\cl $(CPPFLAGS)
+RC = rc
+LINK = $(HIDE)$(MSDEVHOME)\bin\link $(LINKFLAGS)
+
+SOURCES = \
+	$(SOURCES_cc) \
+	$(SOURCES_hh) \
+	$(SOURCES_c) \
+	$(SOURCES_h) \
+	$(SOURCES_cpp) \
+	$(SOURCES_stubs)
+
+OBJECTS = \
+	$(SOURCES_rc:.rc=.res) \
+	$(SOURCES_cc:.cc=.obj) \
+	$(SOURCES_c:.c=.obj) \
+	$(SOURCES_cpp:.cpp=.obj) \
+	$(SOURCES_h) $(SOURCES_hh) \
+	$(STUBS)
+
+.SUFFIXES: .cc .obj 
+
+default: install
+
+STUBS: $(OBJDIR) $(OBJDIR)\dummyfile
+
+STUBS_CLASSES = $(STUBS_CLASSES:/=\)
+
+$(OBJDIR)\dummyfile: $(STUBS_CLASSES)
+	$(ECHO) ---- Generating STUBS $(STUBS_NAMES)
+	$(JAVAH) -d $(OBJDIR) -jni -classpath $(CLASSPATH) $(STUBS_NAMES)
+	@echo I said dummy, didnt I. >$@
+
+$(OBJDIR):
+	@if not exist $(OBJDIR) md $(OBJDIR)
+
+install: STUBS $(OBJECTS) $(TARGLIBRARY)
+
+
+
+{$(SRCDIR)\$(SUBDIR)}.cc{$(OBJDIR)}.obj :
+	$(ECHO) ---- Compiling $<
+	$(CL) -TP -c -Fo$@ $<
+
+{$(SRCDIR)\$(SUBDIR)}.c{$(OBJDIR)}.obj :
+	$(ECHO) ---- Compiling $<
+	$(CL) -c -Fo$@ $<
+
+{$(SRCDIR)\$(SUBDIR)}.cpp{$(OBJDIR)}.obj :
+	$(ECHO) ---- Compiling $<
+	$(CL) -TP -c -Fo$@ $<
+
+{$(SRCREFDIR)\$(SUBDIR)}.cc{$(OBJDIR)}.obj :
+	$(ECHO) ---- Compiling $<
+	$(CL) -TP -c -Fo$@ $<
+
+{$(SRCREFDIR)\$(SUBDIR)}.c{$(OBJDIR)}.obj :
+	$(ECHO) ---- Compiling $<
+	$(CL) -c -Fo$@ $<
+
+{$(SRCREFDIR)\$(SUBDIR)}.rc{$(OBJDIR)}.res :
+	$(ECHO) ---- Compiling $<
+	$(RC) -l 0x409  -Fo$@ $<
+
+{$(SRCREFDIR)\$(SUBDIR)}.cpp{$(OBJDIR)}.obj :
+	$(ECHO) ---- Compiling $<
+	$(CL) -TP -c -Fo$@ $<
+
+$(TARGLIBRARY): $(OBJECTS)
+	$(ECHO) ---- Linking $@
+	$(LINK) -dll -out:$@ $(OBJECTS) $(EXTRA_LIBS)
+	$(ECHO) ---- Copying $@ to $(JMFBUILDDIR)
+	$(HIDE)copy $@ $(JMFBUILDDIR)
+
+clean: FORCE
+	$(ECHO) ---- Deleting $(OBJDIR)
+	@if exist $(OBJDIR) $(RECDEL) $(OBJDIR)
+
+FORCE:
+
+
+

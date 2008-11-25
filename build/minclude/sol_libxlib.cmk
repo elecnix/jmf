@@ -1,0 +1,15 @@
+#
+# @(#)sol_libxlib.cmk	1.1 99/09/16
+# Copyright 1998-99 Sun Microsystems, Inc.
+#
+
+SOURCES_c = \
+	$(OBJDIR)\XLibRenderer.c
+
+STUBS_NAMES = \
+	com.sun.media.renderer.video.XLibRenderer
+
+STUBS_CLASSES = \
+	$(TARGDIR)com/sun/media/renderer/video/XLibRenderer.class
+
+

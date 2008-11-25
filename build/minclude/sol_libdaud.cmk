@@ -1,0 +1,14 @@
+#
+# @(#)sol_libdaud.cmk	1.1 00/03/30
+# Copyright 2000 Sun Microsystems, Inc.
+#
+
+SOURCES_c = \
+	$(OBJDIR)\DirectAudioRenderer.c
+
+STUBS_NAMES = \
+	com.sun.media.renderer.audio.DirectAudioRenderer
+
+STUBS_CLASSES = \
+	$(TARGDIR)com/sun/media/renderer/audio/DirectAudioRenderer.class
+

@@ -1,0 +1,78 @@
+# @(#)defs.nmk	1.16 01/03/28
+#
+# Common makefile definitions. No targets should appear in this
+# makefile. Define BUILDDIR before you include this file.
+#
+
+!ifndef PLATFORM
+PLATFORM = win32
+!endif
+
+MINCLUDES      = $(TOPDIR)\build\minclude
+BUILDDIR       = $(TOPDIR)\build\$(PLATFORM)
+SRCDIR         = $(TOPDIR)\src\share
+SRCREFDIR      = $(TOPDIR)\src\$(PLATFORM)
+!ifdef ALLJAVA
+DESTDIR        = $(BUILDDIR)\javalib
+!else
+DESTDIR	       = $(BUILDDIR)\lib
+!endif
+CUSTOMLIB      = $(BUILDDIR)\customlib
+JMFBUILDDIR    = $(DESTDIR)
+
+!ifdef DEBUG
+OBJDIR = OBJ_g
+DEBUGFLAG = -g
+!else
+OBJDIR = OBJ
+DEBUGFLAG = 
+!endif
+
+!ifndef DEBUGBUILD
+DEBUGBUILD = true
+!endif
+
+!if "$(OS)" == "Windows_NT"
+RECDEL = rmdir/s/q
+!else
+RECDEL = deltree/y
+!endif
+
+!ifndef JAVAHOME
+JAVAHOME = G:\export\local\jdk1.2.2\win32
+!endif
+
+!ifndef JAVA_BUILD_FLAG
+JAVA_BUILD_FLAG = -g
+!endif
+
+!ifndef SOUNDCLASSES
+SOUNDCLASSES = G:\export\JavaMedia\Sound\workspaces\JavaSound-JMF\build\win32\lib
+!endif
+
+CLASSPATH = $(JMFBUILDDIR);$(DESTDIR);$(SRCDIR);$(SRCDIR)\$(SUBDIR);$(SRCREFDIR);$(SOUNDCLASSES)\sound.jar;$(JAVAHOME)\lib\classes.zip;$(JAVAHOME)\lib\tools.jar;$(JAVAHOME)\jre\lib\rt.jar;$(OTHERCLASSES)
+
+!ifndef MESSAGES
+MESSAGES = BRIEF
+!endif
+
+!if "$(MESSAGES)" == "BRIEF"
+HIDE = @
+ECHO = @echo
+!else
+HIDE =
+ECHO = @REM
+!endif
+
+!ifndef JAVACOMPILER
+JAVACOMPILER = $(JAVAHOME)\bin\javac
+!endif
+
+JAVA = $(HIDE)$(JAVAHOME)\bin\java
+JAVAC = $(HIDE)$(JAVACOMPILER) $(JAVA_BUILD_FLAG) \
+	-d $(DESTDIR) \
+	-classpath $(CLASSPATH)
+
+JAVAH = $(HIDE)$(JAVAHOME)\bin\javah
+
+

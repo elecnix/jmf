@@ -1,0 +1,45 @@
+#!/bin/csh
+#
+# @(#)buildjmf.sh-template	1.7 01/04/04
+#
+# This is a shell script template for building JMF on Solaris and Linux x86
+#
+
+#
+# JDK 1.2.2 or higher required to build JMF
+#
+setenv JAVAHOME <top level JDK dir> 
+
+
+# JMF
+setenv JMFHOME <top level JMF dir>
+
+# Solaris or Linux?
+setenv PLATFORM <solaris or linux>
+
+setenv SOUNDCLASSES $JMFHOME/javasound
+
+#
+# ClASSPATH and LD_LIBRARY_PATH are required since JMF runs itself
+# during the build process to register the plugin components.
+#
+setenv CLASSPATH .:$SOUNDCLASSES/sound.jar:$JMFHOME/build/$PLATFORM/lib
+setenv LD_LIBRARY_PATH $JMFHOME/build/$PLATFORM/lib:$SOUNDCLASSES/$PLATFORM
+
+
+# Increase the java VM memory size
+setenv JAVA_BUILD_FLAG "-g -J-mx64m"
+
+# Set the level of compile verbosity BRIEF, NONE or VERBOSE
+# If unspecified it is BRIEF
+setenv MESSAGES BRIEF
+
+# Unset any pre-define make to use gnumake.
+unsetenv MAKE
+
+# Use the sunpro 4.2 for compiling C code.
+setenv PATH /usr/dist/pkgs/devpro,v4.2/5.x-sparc:$PATH
+
+
+(cd $JMFHOME/build/$PLATFORM; gnumake)
+(cd ${JMFHOME}/build/$PLATFORM; gnumake image)

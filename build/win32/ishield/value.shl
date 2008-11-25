@@ -1,0 +1,20 @@
+[Data]
+TITLE_MAIN=Java Media Framework 2.1.1e
+COMPANY_NAME=Sun Microsystems, Inc.
+COMPANY_NAME16=Company
+PRODUCT_VERSION=2.1.1e
+ERROR_MOVEDATA=An error occurred during the move data process : %d
+UNINST_KEY=Java Media Framework 2.1.1e
+TITLE_CAPTIONBAR=Java Media Framework 2.1.1e Setup
+PRODUCT_NAME16=JMF
+ERROR_VGARESOLUTION=This program requires VGA or better resolution.
+UNINST_DISPLAY_NAME=Java Media Framework 2.1.1e
+PRODUCT_KEY=yourapp.Exe
+PRODUCT_NAME=JMF
+ERROR_UNINSTSETUP=unInstaller setup failed to initialize.  You may not be able to uninstall this product.
+
+[General]
+Language=0009
+Type=STRINGTABLESPECIFIC
+Version=2.1.1e
+

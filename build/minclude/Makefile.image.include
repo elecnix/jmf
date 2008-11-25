@@ -1,0 +1,171 @@
+#
+# @(#)Makefile.image.include	1.25 00/03/27 Copyright 1995-99 Sun Microsystems, Inc.
+#
+
+include $(MAKEDIR)/makefiles/Makefile.defs
+
+INSTDIR = $(DESTDIR)
+WRAPDIR = $(DESTDIR)/com/sun/media/renderer/video
+BUFIMDIR = $(DESTDIR)/com/sun/media/util
+
+IMAGEGEN.java = $(TOPDIR)/src/share/com/sun/media/util/ImageGen.java
+IMAGEGEN.class = $(DESTDIR)/ImageGen.class
+
+IMAGES1 = $(IMAGES1_file:%=$(SRCDIR)/$(SUBDIR)/%)
+IMAGES2 = $(IMAGES2_file:%=$(SRCDIR)/$(SUBDIR)/%)
+
+IMAGELIB.dir = $(TOPDIR)/src/share/com/sun/media/ui
+IMAGELIB.java = $(IMAGELIB.dir)/ImageLib.java
+
+IMAGES += $(IMAGES.file:%=$(SRCDIR)/$(SUBDIR)/%)
+
+HOTMEDIA_DIR = $(TOPDIR)/build/$(PLATFORM)/lib/com/ibm/media/content/application/mvr
+
+#CODECLIBS = codecLib/g728 codecLib/g729 codecLib/g729a codecLib/mpa
+CODECLIBS = codecLib/mpa
+CODECLIBS.dst = $(CODECLIBS:%=$(DESTDIR)/%)
+
+#BUILDINFO.template = $(TOPDIR)/src/share/com/sun/media/BuildInfo.template
+#BUILDINFO.dir = $(TOPDIR)/src/$(PLATFORM)/com/sun/media
+#BUILDINFO.temp = $(BUILDINFO.dir)/BuildInfo.temp
+#BUILDINFO.java = $(BUILDINFO.dir)/BuildInfo.java
+#BUILDINFO.class = $(DESTDIR)/com/sun/media/BuildInfo.class
+
+#
+# UNAME is obtained from the environment.  If that's not defined,
+# we'll set it to be the same as the platform.
+#
+ifeq ($(strip $(UNAME)),)
+	UNAME = $(PLATFORM)
+endif
+
+.KEEP_STATE:
+
+all: $(IMAGEGEN.class) $(IMAGELIB.java) BUILDINFO COPYJAVA2D COPYIMAGES COPYHOTMEDIA COPYCODECS
+
+
+# QUICKBUILD only copies files over if they don't already exist
+ifeq ($(QUICKBUILD),TRUE)
+
+COPYHOTMEDIA: $(HOTMEDIA_DIR)
+
+$(HOTMEDIA_DIR):
+	$(ECHO) -- Copying hotmedia classes
+	$(MKDIR) $@
+	$(CP) $(TOPDIR)/src/share/hotmedia/*.class $(TOPDIR)/build/$(PLATFORM)/lib
+	$(CP) $(TOPDIR)/src/share/hotmedia/com/ibm/media/content/application/mvr/*.class $@
+
+
+COPYCODECS: $(DESTDIR)/codecLib
+
+$(DESTDIR)/codecLib:
+	$(ECHO) -- Copying codecs
+	$(HIDE) (cd $(TOPDIR)/src/share ; tar cfFF - codecLib) | (cd $(DESTDIR) ; tar xf -)
+
+COPYIMAGES: $(DESTDIR)/jmapps/images
+
+else
+
+COPYHOTMEDIA: $(HOTMEDIA_DIR)
+	$(ECHO) -- Copying hotmedia classes
+	$(CP) $(TOPDIR)/src/share/hotmedia/*.class $(TOPDIR)/build/$(PLATFORM)/lib
+	$(CP) $(TOPDIR)/src/share/hotmedia/com/ibm/media/content/application/mvr/*.class $(TOPDIR)/build/$(PLATFORM)/lib/com/ibm/media/content/application/mvr
+
+$(HOTMEDIA_DIR):
+	$(MKDIR) $@
+
+
+COPYCODECS: $(CODECLIBS)
+
+$(CODECLIBS): $(CODECLIBS.dst)
+	$(ECHO) -- Copying $(DESTDIR)/$@
+	$(CP) $(TOPDIR)/src/share/$(@)/*.class $(DESTDIR)/$@
+	$(CP) $(TOPDIR)/src/share/$(@)/*.properties $(DESTDIR)/$@
+
+$(CODECLIBS.dst):
+	$(ECHO) -- mkdir $@
+	$(MKDIR) $@
+
+COPYIMAGES: DOCOPYIMAGES
+
+endif
+
+$(DESTDIR)/jmapps/images:
+	$(ECHO) -- Copying images
+	$(MKDIR) $(DESTDIR)/jmapps/images
+	$(CP) $(TOPDIR)/jmapps/jmapps/images/*.gif $(DESTDIR)/jmapps/images
+
+DOCOPYIMAGES: FORCE
+	$(ECHO) -- Copying images
+	$(MKDIR) $(DESTDIR)/jmapps/images
+	$(CP) $(TOPDIR)/jmapps/jmapps/images/*.gif $(DESTDIR)/jmapps/images
+
+
+BUILDINFO: FORCE
+	$(ECHO) -- Creating BuildInfo
+	$(CP) $(TOPDIR)/src/share/com/sun/media/BuildInfo.template BuildInfo.temp
+	$(CHMOD) 644 BuildInfo.temp
+	$(SED) -e "s/build-date/$(BUILDDATE)/" BuildInfo.temp > $(TOPDIR)/src/$(PLATFORM)/com/sun/media/BuildInfo.java
+	$(RM) BuildInfo.temp
+
+COPYJAVA2D: FORCE
+	$(MKDIR) $(WRAPDIR)
+	$(MKDIR) $(BUFIMDIR)
+	$(CP) $(TOPDIR)/src/share/com/sun/media/renderer/video/Java2D*.class $(WRAPDIR)
+	$(CP) $(TOPDIR)/src/share/com/sun/media/util/BufferToBufferedImage.class $(BUFIMDIR)
+
+JMFPROP: FORCE
+	@cp $(TOPDIR)/test/solaris/jmf.properties $(DESTDIR)/jmf.properties
+	@chmod 644 $(DESTDIR)/jmf.properties
+
+#
+# Generate and compile BuildInfo
+#
+#$(BUILDINFO.class): $(BUILDINFO.java)
+#	$(MKDIR) $(INSTDIR)
+#ifeq ($(UNAME), win32)
+#	$(JAVAC) -d $(subst /,\\,$(DESTDIR)) \
+#		$(subst /,\\,$(BUILDINFO.java))
+#else
+#	$(JAVAC) -d $(DESTDIR) -classpath $(CLASSPATH) $(BUILDINFO.java)
+#endif
+#
+#$(BUILDINFO.java): FORCE
+#	$(ECHO) -- Generating BuildInfo 
+#	$(MKDIR) $(BUILDINFO.dir)
+#	$(CP) $(BUILDINFO.template) $(BUILDINFO.temp)
+#	$(CHMOD) 644 $(BUILDINFO.temp)
+#	$(SED) -e "s/build-date/$(BUILDDATE)/" -e "s/build-platform/$(PLATFORM)/" -e "s/build-type/$(DEBUGBUILD)/" $(BUILDINFO.temp) > $@
+#	$(RM) $(BUILDINFO.temp)
+#
+FORCE:
+
+
+#
+# Compile the ImageGen program
+#
+$(IMAGEGEN.class): $(IMAGEGEN.java)
+	$(MKDIR) $(INSTDIR)
+	$(ECHO) -- Compiling $<
+ifeq ($(UNAME), win32)
+	$(JAVAC) -d $(subst /,\\,$(DESTDIR)) \
+		$(subst /,\\,$(IMAGEGEN.java))
+else
+	$(JAVAC) -d $(DESTDIR) -classpath $(CLASSPATH) $(IMAGEGEN.java)
+endif
+
+#
+# Generate the ImageLib generic interface
+#
+$(IMAGELIB.java): $(IMAGEGEN.class)
+	$(ECHO) -- Generating image library $@
+ifeq ($(UNAME), win32)
+	$(JAVA) -classpath $(CLASSPATH) ImageGen \
+		-d $(subst /,\\,$(IMAGELIB.dir)) com.sun.media.ui.ImageLib $(subst /,\\,$(IMAGES1)) $(subst /,\\,$(IMAGES2))
+else
+	$(JAVA) -classpath $(CLASSPATH) ImageGen \
+		-d $(IMAGELIB.dir) com.sun.media.ui.ImageLib $(IMAGES1) $(IMAGES2)
+endif
+
+
+install: all

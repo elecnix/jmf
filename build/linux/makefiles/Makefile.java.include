@@ -1,0 +1,80 @@
+#
+# @(#)Makefile.java.include	1.3 00/03/27
+# Copyright 1998-2000 Sun Microsystems, Inc.
+#
+
+include $(TOPDIR)/build/linux/makefiles/Makefile.defs
+
+SOURCES += \
+	$(SOURCES_java:%.java=$(SRCDIR)/$(SUBDIR)/%.java) \
+	$(SOURCES.platform2.java:%.java=$(SRCREFDIR2)/$(SUBDIR)/%.java) \
+	$(SOURCES.platform.java:%.java=$(SRCREFDIR)/$(SUBDIR)/%.java) \
+	$(TEST_java:%.java=$(SRCDIR)/$(SUBDIR)/%.java)
+
+TARGETS.classes = \
+	$(SOURCES_java:%.java=$(CLASSDIR)/$(SUBDIR)/%.class) \
+	$(SOURCES.platform2.java:%.java=$(CLASSDIR)/$(SUBDIR)/%.class) \
+	$(SOURCES.platform.java:%.java=$(CLASSDIR)/$(SUBDIR)/%.class)
+
+TEST.source = \
+	$(TEST_java:%.java=$(SRCDIR)/$(SUBDIR)/%.java)
+
+TEST.classes = \
+	$(TEST_java:%.java=$(SRCDIR)/$(SUBDIR)/%.class)
+
+.KEEP_STATE:
+
+all: announce $(CLASSDIR) startup $(TARGETS.classes) $(TEST.classes) compilethem
+
+install: all
+
+startup:
+	rm -f .class.list
+
+
+$(CLASSDIR)/$(SUBDIR)/%.class: $(SRCDIR)/$(SUBDIR)/%.java
+	$(ECHO) -- Need to compile $<
+	@echo $< >>.class.list
+
+$(CLASSDIR)/$(SUBDIR)/%.class: $(SRCREFDIR2)/$(SUBDIR)/%.java
+	$(ECHO) -- Need to compile $<
+	@echo $< >>.class.list
+
+$(CLASSDIR)/$(SUBDIR)/%.class: $(SRCREFDIR)/$(SUBDIR)/%.java
+	$(ECHO) -- Need to compile $<
+	@echo $< >>.class.list
+
+#$(CLASSDIR)/$(SUBDIR)/%.class: $(SRCDIR)/$(SUBDIR)/%.java
+#	$(ECHO) -- Compiling $<
+#	$(JAVAC) $(JAVA_BUILD_FLAG) \
+#		-classpath $(CLASSPATH) \
+#		-d $(CLASSDIR) \
+#		$<
+#
+#$(CLASSDIR)/$(SUBDIR)/%.class: $(SRCREFDIR)/$(SUBDIR)/%.java
+#	$(ECHO) -- Compiling $<
+#	$(JAVAC) $(JAVA_BUILD_FLAG) \
+#		-classpath $(CLASSPATH) \
+#		-d $(CLASSDIR) \
+#		$<
+
+compilethem:
+	$(ECHO) -- Compiling $(shell if [ -s .class.list ] ; then cat .class.list ; else echo nothing ; fi )
+	if [ -s .class.list ] ; \
+	then \
+		$(JAVAC) $(JAVA_BUILD_FLAG) -classpath $(CLASSPATH) \
+		-d $(CLASSDIR) \
+		$(shell if [ -s .class.list ] ; then cat .class.list; fi) ; \
+	fi
+
+$(TEST.classes):
+	$(ECHO) -- Compiling $(TEST_java)
+	$(JAVAC) $(JAVA_BUILD_FLAG) -classpath $(CLASSPATH) \
+		-d $(SRCDIR)/$(SUBDIR) $(TEST.source)
+
+$(CLASSDIR):
+	$(ECHO) -- Creating $(CLASSDIR)
+	$(MKDIR) $@
+
+announce:
+	$(ECHO) DIRECTORY $(SUBDIR)

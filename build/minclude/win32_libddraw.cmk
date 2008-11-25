@@ -1,0 +1,15 @@
+#
+# @(#)win32_libddraw.cmk	1.1 98/08/19
+#
+
+SOURCES_cc = \
+	$(OBJDIR)\DDRenderer.cc
+
+STUBS_NAMES = \
+	com.sun.media.renderer.video.DDRenderer
+
+STUBS_CLASSES = \
+	$(TARGDIR)com/sun/media/renderer/video/DDRenderer.class
+
+
+

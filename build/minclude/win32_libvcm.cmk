@@ -1,0 +1,14 @@
+#
+# @(#)win32_libvcm.cmk	1.2 03/04/25
+#
+
+SOURCES_c = \
+	$(OBJDIR)\vcm.c
+
+STUBS_NAMES = \
+	com.sun.media.codec.video.vcm.VCM
+
+STUBS_CLASSES = \
+	$(TARGDIR)com/sun/media/codec/video/vcm/VCM.class
+
+

@@ -1,0 +1,32 @@
+#
+# @(#)sol_com_sun_media.jmk	1.18 01/02/27
+# Copyright 1998-2000 Sun Microsystems, Inc.
+#
+
+SOURCES.platform.java += \
+	renderer/audio/DirectAudioRenderer.java \
+	renderer/audio/BufSlot.java \
+	renderer/audio/MixedDirectAudioRenderer.java \
+	renderer/video/XILRenderer.java \
+	renderer/video/XLibRenderer.java \
+	renderer/video/SunRayRenderer.java \
+	protocol/sunvideo/XILCapture.java \
+	protocol/sunvideo/SunVideoSourceStream.java \
+	protocol/sunvideo/jdk12CreateThreadAction.java \
+	protocol/sunvideo/DataSource.java \
+	protocol/sunvideoplus/OPICapture.java \
+	protocol/sunvideoplus/OPISourceStream.java \
+	protocol/sunvideoplus/DataSource.java \
+	protocol/sunvideoplus/jdk12CreateThreadAction.java \
+	codec/video/jmpx/Jmpx.java \
+	codec/video/jmpx/JmpxAckNotifyEvent.java \
+	codec/video/jmpx/JmpxAudio.java \
+	codec/video/jmpx/JmpxEvent.java \
+	codec/video/jmpx/JmpxFileDoneEvent.java \
+	codec/video/jmpx/JmpxListener.java \
+	codec/video/jmpx/JmpxSizeChangeEvent.java \
+	codec/video/jmpx/JmpxStatsUpdateEvent.java \
+	content/video/mpeg/Handler.java \
+	codec/video/cinepakpro/NativeEncoder.java \
+	BuildInfo.java \
+	util/Arch.java

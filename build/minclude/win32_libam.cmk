@@ -1,0 +1,17 @@
+#
+# @(#)win32_libam.cmk	1.1 99/07/14
+#
+
+SOURCES_cc = \
+	$(OBJDIR)\JStream.cc \
+	$(OBJDIR)\JMSourceFilter.cc \
+	$(OBJDIR)\ActiveMovieImp.cc \
+	$(OBJDIR)\NullAudioFilter.cc
+
+STUBS_NAMES = \
+	com.sun.media.amovie.ActiveMovie
+
+STUBS_CLASSES = \
+	$(TARGDIR)com/sun/media/amovie/ActiveMovie.class
+
+

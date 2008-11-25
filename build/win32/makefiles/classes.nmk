@@ -1,0 +1,261 @@
+#
+# @(#)classes.nmk	1.12 00/10/25
+#
+
+SOURCES_class = $(SOURCES_java:.java=.class)
+SOURCES_class = $(SOURCES_class:/=\)
+TEST_class = $(TEST_java:.java=.class)
+
+PKG1_DIR    = $(PKG1:.=\)
+PKG2_DIR    = $(PKG2:.=\)
+PKG3_DIR    = $(PKG3:.=\)
+PKG4_DIR    = $(PKG4:.=\)
+PKG5_DIR    = $(PKG5:.=\)
+PKG6_DIR    = $(PKG6:.=\)
+PKG7_DIR    = $(PKG7:.=\)
+PKG8_DIR    = $(PKG8:.=\)
+PKG9_DIR    = $(PKG9:.=\)
+PKG10_DIR   = $(PKG10:.=\)
+PKG11_DIR   = $(PKG11:.=\)
+PKG12_DIR   = $(PKG12:.=\)
+PKG13_DIR   = $(PKG13:.=\)
+PKG14_DIR   = $(PKG14:.=\)
+PKG15_DIR   = $(PKG15:.=\)
+PKG16_DIR   = $(PKG16:.=\)
+PKG17_DIR   = $(PKG17:.=\)
+PKG18_DIR   = $(PKG18:.=\)
+PKG19_DIR   = $(PKG19:.=\)
+PKG20_DIR   = $(PKG20:.=\)
+PKG21_DIR   = $(PKG21:.=\)
+
+CLASSLIST = 
+
+.SUFFIXES: .java .class
+
+{$(SRCDIR)\hotmedia}.java{$(DESTDIR)}.class:
+	$(ECHO) ---- Compiling $<
+	$(JAVAC) $<
+
+{$(TOPDIR)\jmapps\jmapps\jmstudio}.java{$(DESTDIR)\jmapps\jmstudio}.class:
+	$(ECHO) ---- Compiling $<
+	$(JAVAC) $<
+
+{$(TOPDIR)\jmapps\jmapps\registry}.java{$(DESTDIR)\jmapps\registry}.class:
+	$(ECHO) ---- Compiling $<
+	$(JAVAC) $<
+
+{$(TOPDIR)\jmapps\jmapps\ui}.java{$(DESTDIR)\jmapps\ui}.class:
+	$(ECHO) ---- Compiling $<
+	$(JAVAC) $<
+
+{$(TOPDIR)\jmapps\jmapps\export}.java{$(DESTDIR)\jmapps\export}.class:
+	$(ECHO) ---- Compiling $<
+	$(JAVAC) $<
+
+{$(TOPDIR)\jmapps\jmapps\util}.java{$(DESTDIR)\jmapps\util}.class:
+	$(ECHO) ---- Compiling $<
+	$(JAVAC) $<
+
+{$(TOPDIR)\jmapps\jmapps\rtp}.java{$(DESTDIR)\jmapps\rtp}.class:
+	$(ECHO) ---- Compiling $<
+	$(JAVAC) $<
+
+{$(TOPDIR)\test\player}.java{$(DESTDIR)}.class:
+	$(ECHO) ---- Compiling $<
+	$(JAVAC) $<
+
+{$(TOPDIR)\test\player\rtp}.java{$(DESTDIR)\rtp}.class:
+	$(ECHO) ---- Compiling $<
+	$(JAVAC) $<
+
+{$(TOPDIR)\test\bean\com\ibm\media\bean\multiplayer}.java{$(DESTDIR)\com\ibm\media\bean\multiplayer}.class:
+	$(ECHO) ---- Compiling $<
+	$(JAVAC) $<
+
+{$(TOPDIR)\test\bean\com\ibm\media\bean\multiplayer\nls}.java{$(DESTDIR)\com\ibm\media\bean\multiplayer\nls}.class:
+	$(ECHO) ---- Compiling $<
+	$(JAVAC) $<
+
+{$(TOPDIR)\test\registry}.java{$(DESTDIR)}.class:
+	$(ECHO) ---- Compiling $<
+	$(JAVAC) $<
+
+{$(TOPDIR)\src\share\com\sun\media\customizer}.java{$(DESTDIR)\com\sun\media\customizer}.class:
+	$(ECHO) ---- Compiling $<
+	$(JAVAC) $<
+
+{$(TOPDIR)\test\plugin}.java{$(TOPDIR)\test\plugin}.class:
+	$(ECHO) ---- Compiling $<
+	$(HIDE)$(JAVACOMPILER) $(JAVA_BUILD_FLAG) \
+	-d $(TOPDIR)\test\plugin \
+	-classpath $(CLASSPATH) $<
+
+{$(SRCREFDIR)\$(PKG1_DIR)}.java{$(DESTDIR)\$(PKG1_DIR)}.class:
+	$(ECHO) ---- Compiling $<
+	$(JAVAC) $<
+
+{$(SRCDIR)\$(PKG1_DIR)}.java{$(DESTDIR)\$(PKG1_DIR)}.class:
+	$(ECHO) ---- Compiling $<
+	$(JAVAC) $<
+
+{$(SRCREFDIR)\$(PKG2_DIR)}.java{$(DESTDIR)\$(PKG2_DIR)}.class:
+	$(ECHO) ---- Compiling $<
+	$(JAVAC) $<
+
+{$(SRCDIR)\$(PKG2_DIR)}.java{$(DESTDIR)\$(PKG2_DIR)}.class:
+	$(ECHO) ---- Compiling $<
+	$(JAVAC) $<
+
+{$(SRCREFDIR)\$(PKG3_DIR)}.java{$(DESTDIR)\$(PKG3_DIR)}.class:
+	$(ECHO) ---- Compiling $<
+	$(JAVAC) $<
+
+{$(SRCDIR)\$(PKG3_DIR)}.java{$(DESTDIR)\$(PKG3_DIR)}.class:
+	$(ECHO) ---- Compiling $<
+	$(JAVAC) $<
+
+{$(SRCREFDIR)\$(PKG4_DIR)}.java{$(DESTDIR)\$(PKG4_DIR)}.class:
+	$(ECHO) ---- Compiling $<
+	$(JAVAC) $<
+
+{$(SRCDIR)\$(PKG4_DIR)}.java{$(DESTDIR)\$(PKG4_DIR)}.class:
+	$(ECHO) ---- Compiling $<
+	$(JAVAC) $<
+
+{$(SRCREFDIR)\$(PKG5_DIR)}.java{$(DESTDIR)\$(PKG5_DIR)}.class:
+	$(ECHO) ---- Compiling $<
+	$(JAVAC) $<
+
+{$(SRCDIR)\$(PKG5_DIR)}.java{$(DESTDIR)\$(PKG5_DIR)}.class:
+	$(ECHO) ---- Compiling $<
+	$(JAVAC) $<
+
+{$(SRCREFDIR)\$(PKG6_DIR)}.java{$(DESTDIR)\$(PKG6_DIR)}.class:
+	$(ECHO) ---- Compiling $<
+	$(JAVAC) $<
+
+{$(SRCDIR)\$(PKG6_DIR)}.java{$(DESTDIR)\$(PKG6_DIR)}.class:
+	$(ECHO) ---- Compiling $<
+	$(JAVAC) $<
+
+{$(SRCREFDIR)\$(PKG7_DIR)}.java{$(DESTDIR)\$(PKG7_DIR)}.class:
+	$(ECHO) ---- Compiling $<
+	$(JAVAC) $<
+
+{$(SRCDIR)\$(PKG7_DIR)}.java{$(DESTDIR)\$(PKG7_DIR)}.class:
+	$(ECHO) ---- Compiling $<
+	$(JAVAC) $<
+
+{$(SRCREFDIR)\$(PKG8_DIR)}.java{$(DESTDIR)\$(PKG8_DIR)}.class:
+	$(ECHO) ---- Compiling $<
+	$(JAVAC) $<
+
+{$(SRCDIR)\$(PKG8_DIR)}.java{$(DESTDIR)\$(PKG8_DIR)}.class:
+	$(ECHO) ---- Compiling $<
+	$(JAVAC) $<
+
+{$(SRCREFDIR)\$(PKG9_DIR)}.java{$(DESTDIR)\$(PKG9_DIR)}.class:
+	$(ECHO) ---- Compiling $<
+	$(JAVAC) $<
+
+{$(SRCDIR)\$(PKG9_DIR)}.java{$(DESTDIR)\$(PKG9_DIR)}.class:
+	$(ECHO) ---- Compiling $<
+	$(JAVAC) $<
+
+{$(SRCREFDIR)\$(PKG10_DIR)}.java{$(DESTDIR)\$(PKG10_DIR)}.class:
+	$(ECHO) ---- Compiling $<
+	$(JAVAC) $<
+
+{$(SRCDIR)\$(PKG10_DIR)}.java{$(DESTDIR)\$(PKG10_DIR)}.class:
+	$(ECHO) ---- Compiling $<
+	$(JAVAC) $<
+
+{$(SRCREFDIR)\$(PKG11_DIR)}.java{$(DESTDIR)\$(PKG11_DIR)}.class:
+	$(ECHO) ---- Compiling $<
+	$(JAVAC) $<
+
+{$(SRCDIR)\$(PKG11_DIR)}.java{$(DESTDIR)\$(PKG11_DIR)}.class:
+	$(ECHO) ---- Compiling $<
+	$(JAVAC) $<
+
+{$(SRCREFDIR)\$(PKG12_DIR)}.java{$(DESTDIR)\$(PKG12_DIR)}.class:
+	$(ECHO) ---- Compiling $<
+	$(JAVAC) $<
+
+{$(SRCDIR)\$(PKG12_DIR)}.java{$(DESTDIR)\$(PKG12_DIR)}.class:
+	$(ECHO) ---- Compiling $<
+	$(JAVAC) $<
+
+{$(SRCREFDIR)\$(PKG13_DIR)}.java{$(DESTDIR)\$(PKG13_DIR)}.class:
+	$(ECHO) ---- Compiling $<
+	$(JAVAC) $<
+
+{$(SRCDIR)\$(PKG13_DIR)}.java{$(DESTDIR)\$(PKG13_DIR)}.class:
+	$(ECHO) ---- Compiling $<
+	$(JAVAC) $<
+
+{$(SRCREFDIR)\$(PKG14_DIR)}.java{$(DESTDIR)\$(PKG14_DIR)}.class:
+	$(ECHO) ---- Compiling $<
+	$(JAVAC) $<
+
+{$(SRCDIR)\$(PKG14_DIR)}.java{$(DESTDIR)\$(PKG14_DIR)}.class:
+	$(ECHO) ---- Compiling $<
+	$(JAVAC) $<
+
+{$(SRCREFDIR)\$(PKG15_DIR)}.java{$(DESTDIR)\$(PKG15_DIR)}.class:
+	$(ECHO) ---- Compiling $<
+	$(JAVAC) $<
+
+{$(SRCDIR)\$(PKG15_DIR)}.java{$(DESTDIR)\$(PKG15_DIR)}.class:
+	$(ECHO) ---- Compiling $<
+	$(JAVAC) $<
+
+{$(SRCREFDIR)\$(PKG16_DIR)}.java{$(DESTDIR)\$(PKG16_DIR)}.class:
+	$(ECHO) ---- Compiling $<
+	$(JAVAC) $<
+
+{$(SRCDIR)\$(PKG16_DIR)}.java{$(DESTDIR)\$(PKG16_DIR)}.class:
+	$(ECHO) ---- Compiling $<
+	$(JAVAC) $<
+
+{$(SRCREFDIR)\$(PKG17_DIR)}.java{$(DESTDIR)\$(PKG17_DIR)}.class:
+	$(ECHO) ---- Compiling $<
+	$(JAVAC) $<
+
+{$(SRCDIR)\$(PKG17_DIR)}.java{$(DESTDIR)\$(PKG17_DIR)}.class:
+	$(ECHO) ---- Compiling $<
+	$(JAVAC) $<
+
+{$(SRCREFDIR)\$(PKG18_DIR)}.java{$(DESTDIR)\$(PKG18_DIR)}.class:
+	$(ECHO) ---- Compiling $<
+	$(JAVAC) $<
+
+{$(SRCDIR)\$(PKG18_DIR)}.java{$(DESTDIR)\$(PKG18_DIR)}.class:
+	$(ECHO) ---- Compiling $<
+	$(JAVAC) $<
+
+{$(SRCREFDIR)\$(PKG19_DIR)}.java{$(DESTDIR)\$(PKG19_DIR)}.class:
+	$(ECHO) ---- Compiling $<
+	$(JAVAC) $<
+
+{$(SRCDIR)\$(PKG19_DIR)}.java{$(DESTDIR)\$(PKG19_DIR)}.class:
+	$(ECHO) ---- Compiling $<
+	$(JAVAC) $<
+
+{$(SRCREFDIR)\$(PKG20_DIR)}.java{$(DESTDIR)\$(PKG20_DIR)}.class:
+	$(ECHO) ---- Compiling $<
+	$(JAVAC) $<
+
+{$(SRCDIR)\$(PKG20_DIR)}.java{$(DESTDIR)\$(PKG20_DIR)}.class:
+	$(ECHO) ---- Compiling $<
+	$(JAVAC) $<
+
+{$(SRCREFDIR)\$(PKG21_DIR)}.java{$(DESTDIR)\$(PKG21_DIR)}.class:
+	$(ECHO) ---- Compiling $<
+	$(JAVAC) $<
+
+{$(SRCDIR)\$(PKG21_DIR)}.java{$(DESTDIR)\$(PKG21_DIR)}.class:
+	$(ECHO) ---- Compiling $<
+	$(JAVAC) $<
+
+

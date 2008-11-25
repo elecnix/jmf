@@ -1,0 +1,14 @@
+#
+# @(#)win32_libmci.cmk	1.1 99/08/14
+#
+
+SOURCES_cc = \
+	$(OBJDIR)\mci.cc
+
+STUBS_NAMES = \
+	com.sun.media.amovie.MCI
+
+STUBS_CLASSES = \
+	$(TARGDIR)com/sun/media/amovie/MCI.class
+
+

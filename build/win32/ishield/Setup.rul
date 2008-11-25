@@ -1,0 +1,1058 @@
+
+////////////////////////////////////////////////////////////////////////////////
+//
+//  IIIIIII SSSSSS
+//    II    SS                          InstallShield (R)
+//    II    SSSSSS      (c) 1996-1997, InstallShield Software Corporation
+//    II        SS      (c) 1990-1996, InstallShield Corporation
+//  IIIIIII SSSSSS                     All Rights Reserved.
+//
+//
+//  This code is generated as a starting setup template.  You should
+//  modify it to provide all necessary steps for your setup.
+//
+//
+//    File Name:  Setup.rul
+//
+//  Description:  InstallShield script
+//
+//     Comments:  This script is for JMF 2.1.1e
+//
+////////////////////////////////////////////////////////////////////////////////
+
+
+// Include header file
+#include "sdlang.h"
+#include "sddialog.h"
+
+////////////////////// string defines ////////////////////////////
+
+#define UNINST_LOGFILE_NAME      "Uninst.isu"
+
+//////////////////// installation declarations ///////////////////
+
+  // ----- DLL prototypes -----
+
+
+     // your DLL prototypes
+
+
+  // ---- script prototypes -----
+
+     // generated
+     prototype ShowDialogs();
+     prototype MoveFileData();
+     prototype HandleMoveDataError( NUMBER );
+     prototype ProcessBeforeDataMove();
+     prototype ProcessAfterDataMove();
+     prototype SetupRegistry();
+     prototype SetupFolders();
+     prototype CleanUpInstall();
+     prototype SetupInstall();
+     prototype SetupScreen();
+     prototype CheckRequirements();
+     prototype DialogShowSdLicense();
+     prototype DialogShowSdAskDestPath();
+     prototype DialogShowSdFinishReboot();
+
+     // your prototypes
+     prototype UpdateMimeTypes();
+     prototype SetupJDK12();
+     prototype InitializeJMF();
+     prototype MoveFilesToWinDir();
+     prototype SetupNetscape();
+     prototype CopyFilesToJDKExt( STRING );
+     prototype CopyFilesToNetscape( STRING, STRING );
+	 prototype UninstallOldJMF ( STRING );
+  // ----- global variables ------
+
+     // generated
+     BOOL        bWinNT, bIsShellExplorer, bInstallAborted, bIs32BitSetup;
+     BOOL        bJRE, bJVIEW;
+     STRING      svDir;
+     STRING      svName, svCompany, svSerial;
+     STRING      svDefGroup;
+     STRING      szAppPath;
+     STRING      svSetupType;
+
+	 NUMBER      nvNetscape, nvJDK12, nvMoveToWin;
+	 NUMBER      nvUninstall, nvRegistry, nvUpdatePaths;
+	 NUMBER      nvAllowCapture, nvAllowFileWriting;
+	
+
+     // your global variables
+
+     STRING      szJavaVM;
+     STRING      szJavaHome;
+
+///////////////////////////////////////////////////////////////////////////////
+//
+//   MAIN PROGRAM
+//
+//      The setup begins here by hiding the visible setup
+//      window.  This is done to allow all the titles, images, etc. to
+//      be established before showing the main window.  The following
+//      logic then performs the setup in a series of steps.
+//
+///////////////////////////////////////////////////////////////////////////////
+program
+    Disable( BACKGROUND );
+
+    CheckRequirements();
+
+    SetupInstall();
+
+    SetupScreen();
+
+    if (ShowDialogs()<0) goto end_install;
+
+    if (ProcessBeforeDataMove()<0) goto end_install;
+
+    if (MoveFileData()<0) goto end_install;
+
+    if (ProcessAfterDataMove()<0) goto end_install;
+
+    if (SetupRegistry()<0) goto end_install;
+
+  end_install:
+
+    CleanUpInstall();
+
+     // If an unrecoverable error occurred, clean up the partial installation.
+     // Otherwise, exit normally.
+
+    if (bInstallAborted) then
+        abort;
+    endif;
+
+endprogram
+
+///////////////////////////////////////////////////////////////////////////////
+//                                                                           //
+// Function:  ShowDialogs                                                    //
+//                                                                           //
+//  Purpose:  This function manages the display and navigation               //
+//            the standard dialogs that exist in a setup.                    //
+//                                                                           //
+///////////////////////////////////////////////////////////////////////////////
+function ShowDialogs()
+    NUMBER  nResult;
+ begin
+
+    Dlg_Start:
+        // beginning of dialogs label
+
+    Dlg_SdLicense:
+        nResult = DialogShowSdLicense();
+        if (nResult = BACK) goto Dlg_Start;
+
+    Dlg_SdAskDestPath:
+        nResult = DialogShowSdAskDestPath();
+        if (nResult = BACK) goto Dlg_SdLicense;
+        LongPathToShortPath ( TARGETDIR );
+
+	Dlg_ShowOptions:
+    	nvNetscape = TRUE;
+    	nvJDK12 = TRUE;
+    	nvMoveToWin = TRUE;
+    	nvRegistry = TRUE;
+    	nvUpdatePaths = TRUE;
+		nvUninstall = TRUE;
+		nvAllowCapture = TRUE;
+		nvAllowFileWriting = FALSE;
+	
+		AskOptions( NONEXCLUSIVE ,
+	          "Select Setup Options" ,
+	          "Uninstall earlier versions of JMF", nvUninstall,
+	          "Copy files needed to run in Netscape" , nvNetscape ,
+	          "Copy files needed to run in AppletViewer of JDK 1.2+" , nvJDK12,
+	          "Move DLLs to Windows/System directory (recommended)", nvMoveToWin,
+//	          "Update Registry", nvRegistry,
+	          "Make necessary changes to PATH and CLASSPATH", nvUpdatePaths,
+			  "Permit recording from an applet (See readme.html)", nvAllowCapture,
+			  "Permit writing local files from an applet (See readme.html)", nvAllowFileWriting
+	    );
+
+    return 0;
+ end;
+
+///////////////////////////////////////////////////////////////////////////////
+//                                                                           //
+// Function: UninstallOldJMF                                                 //
+//                                                                           //
+//                                                                           //
+///////////////////////////////////////////////////////////////////////////////
+function UninstallOldJMF( svVersion )
+	STRING svPath, svResult;
+	NUMBER nvType, nvSize;
+	NUMBER nResult;
+begin
+
+   	RegDBSetDefaultRoot ( HKEY_LOCAL_MACHINE );
+   	nResult =
+   		RegDBGetKeyValueEx ( "\\SOFTWARE\\Sun Microsystems, Inc.\\JMF\\" + svVersion,
+   		                 	 "JMFDir" , nvType , svPath , nvSize );
+   	if (nResult < 0) then
+   		return;
+   	endif;
+   	
+   	if (FindFile ( svPath , "Uninst.isu" , svResult ) = 0) then
+   		LaunchAppAndWait ( "IsUninst.exe" , "-f" + svPath ^ "Uninst.isu" , WAIT );
+    endif;
+
+	RegDBSetDefaultRoot ( HKEY_CLASSES_ROOT );
+	   	
+end;
+
+///////////////////////////////////////////////////////////////////////////////
+//                                                                           //
+// Function: ProcessBeforeDataMove                                           //
+//                                                                           //
+//  Purpose: This function performs any necessary operations prior to the    //
+//           actual data move operation.                                     //
+//                                                                           //
+///////////////////////////////////////////////////////////////////////////////
+function ProcessBeforeDataMove()
+  STRING svLogFile;
+  NUMBER nResult;
+  STRING svUserHome;
+  STRING svResult;
+  NUMBER deletedPolicyFile;
+  STRING szCommand;
+ begin
+
+  	szAppPath = TARGETDIR;
+	deletedPolicyFile = 0;
+	
+	// Uninstall earlier versions of JMF
+  	if (nvUninstall = TRUE) then
+		UninstallOldJMF("2.1.1e");
+		UninstallOldJMF("2.1.1d");
+		UninstallOldJMF("2.1.1c");
+		UninstallOldJMF("2.1.1b");
+		UninstallOldJMF("2.1.1a");
+		UninstallOldJMF("2.1.1");
+		UninstallOldJMF("2.1.1_beta3");
+		UninstallOldJMF("2.1.1_beta2");
+		UninstallOldJMF("2.1.1_beta1");
+		UninstallOldJMF("2.1");
+		UninstallOldJMF("2.0");
+		UninstallOldJMF("1.1");
+		UninstallOldJMF("1.0.2");
+  	endif;
+
+  	InstallationInfo( @COMPANY_NAME, @PRODUCT_NAME, @PRODUCT_VERSION, @PRODUCT_KEY );
+
+  	svLogFile = UNINST_LOGFILE_NAME;
+  	szAppPath = TARGETDIR;
+	if (bWinNT) then
+		szCommand = "CMD";
+	else
+		szCommand = "COMMAND";
+	endif;
+	
+	GetEnvVar("USERPROFILE", svUserHome);
+	LongPathToShortPath(svUserHome);
+	nResult = FindFile ( svUserHome , ".java.policy" , svResult );
+	if ( nResult = 0) then
+		if (LaunchAppAndWait(szCommand, "/C del " + svUserHome ^ "java~1.pol", WAIT) = 1) then
+			deletedPolicyFile = 1;
+		else
+			MessageBox ( "SECURITY RISK:  Unable to delete " + svUserHome ^ ".java.policy" + ". Please delete it manually."  , WARNING );
+		endif;
+	endif;
+	GetEnvVar("WINDIR", svUserHome);
+	LongPathToShortPath(svUserHome);	
+	if (FindFile ( svUserHome , ".java.policy" , svResult ) = 0) then
+		if (LaunchAppAndWait(szCommand, "/C del " + svUserHome ^ "java~1.pol", WAIT) = 1) then
+			deletedPolicyFile = 1;
+		else
+			MessageBox ( "SECURITY RISK:  Unable to delete " + svUserHome ^ ".java.policy" + ". Please delete it manually."  , WARNING );
+		endif;
+	endif;
+	  	
+	nResult = DeinstallStart( svDir, svLogFile, @UNINST_KEY, 0 );
+  	
+  	if (nResult < 0) then
+      	MessageBox( @ERROR_UNINSTSETUP, WARNING );
+  	endif;
+
+
+	
+
+  	if ((bIs32BitSetup) && (bIsShellExplorer)) then
+     	RegDBSetItem( REGDB_APPPATH, szAppPath );
+     	RegDBSetItem( REGDB_APPPATH_DEFAULT, szAppPath ^ @PRODUCT_KEY );
+     	RegDBSetItem( REGDB_UNINSTALL_NAME, @UNINST_DISPLAY_NAME );
+  	endif;
+
+
+  	return 0;
+ end;
+
+///////////////////////////////////////////////////////////////////////////////
+//                                                                           //
+// Function:  MoveFileData                                                   //
+//                                                                           //
+//  Purpose:  This function handles the data movement for                    //
+//            the setup.                                                     //
+//                                                                           //
+///////////////////////////////////////////////////////////////////////////////
+function MoveFileData()
+  NUMBER nResult, nDisk;
+ begin
+
+  nDisk = 1;
+  SetStatusWindow( 0, "" );
+  Disable( DIALOGCACHE );
+  Enable( STATUS );
+  StatusUpdate( ON, 100 );
+  nResult = ComponentMoveData( MEDIA, nDisk, 0 );
+
+  HandleMoveDataError( nResult );
+
+  Disable( STATUS );
+
+  return nResult;
+
+ end;
+
+
+///////////////////////////////////////////////////////////////////////////////
+//                                                                           //
+// Function: HandleMoveDataError                                             //
+//                                                                           //
+//  Purpose: This function handles the error (if any) during the move data   //
+//           operation.                                                      //
+//                                                                           //
+///////////////////////////////////////////////////////////////////////////////
+function HandleMoveDataError( nResult )
+ begin
+
+  switch (nResult)
+  case 0:
+       return 0;
+  default:
+       SprintfBox( SEVERE, @TITLE_CAPTIONBAR, @ERROR_MOVEDATA, nResult );
+       bInstallAborted = TRUE;
+       return nResult;
+  endswitch;
+
+ end;
+
+///////////////////////////////////////////////////////////////////////////////
+//                                                                           //
+// Function: ProcessAfterDataMove                                            //
+//                                                                           //
+//  Purpose: This function performs any necessary operations needed after    //
+//           all data has been moved.                                        //
+//                                                                           //
+///////////////////////////////////////////////////////////////////////////////
+function ProcessAfterDataMove()
+  STRING szReferenceFile;
+  NUMBER fh;
+  STRING szBin;
+  STRING szTemp;
+  STRING szProps;
+  STRING TARGET;
+  STRING OLDSRCDIR;
+  NUMBER len;
+ begin
+    TARGET = TARGETDIR;
+    StrRemoveLastSlash ( TARGET );
+    LongPathToShortPath ( TARGET );
+    TARGETDIR = TARGET;
+  return 0;
+ end;
+
+///////////////////////////////////////////////////////////////////////////////
+//                                                                           //
+// Function: InitializeJMF                                                   //
+//                                                                           //
+//  Purpose: This function initializes JMF settings and batch files          //
+//                                                                           //
+//                                                                           //
+///////////////////////////////////////////////////////////////////////////////
+function InitializeJMF()
+  STRING szBin;
+  STRING szUserHome;
+  STRING szTempDir;
+  STRING TARGET;
+  STRING OLDSRCDIR;
+  STRING szError;
+  STRING szInvocation;
+  NUMBER result1, result2;
+  NUMBER fHandle;
+  STRING szAllowCapture;
+  STRING szAllowFileWriting;
+ begin
+    TARGET = TARGETDIR;
+    szBin = TARGET ^ "bin";
+    OLDSRCDIR = SRCDIR;
+    SRCDIR = szBin;
+    TARGETDIR = TARGET ^ "lib";
+
+    Disable( LOGGING );
+
+    SdShowMsg ( "Updating batch files" , TRUE );
+
+    GetEnvVar ( "TMP", szTempDir );
+    // Ask and remove old jmf versions
+
+	// Update JMF registry settings - temp dir and capture settings
+	SdShowMsg ( "Running JMF Initialization program.\n" +
+				" This might take a few seconds...", TRUE );
+	
+	// Delete any existing jmf.properties.orig file
+	DeleteFile( "jmf.properties.orig" );
+	TARGETDIR = TARGET;
+	szAllowCapture = "0";
+
+	if (nvAllowCapture = TRUE) then
+		szAllowCapture = "1";
+	endif;
+
+	if (nvAllowFileWriting = TRUE) then
+		szAllowFileWriting = "1";
+	endif;
+
+	// Launch the initialization program and wait until its done	
+	LaunchAppAndWait( TARGETDIR ^ "bin" ^ "jmfinit", " -jre " + szJavaVM + " " +
+                          szTempDir + "  " +
+                          TARGETDIR ^ "doc" ^ "jmf-policy" + " " +
+						  szAllowCapture + " " +
+						  szAllowFileWriting, WAIT );
+
+    SdShowMsg ( "" , FALSE );
+
+    Enable( LOGGING );
+
+    TARGETDIR = TARGET ^ "lib";
+    SRCDIR = TARGETDIR;
+
+    OpenFileMode(FILE_MODE_APPEND);
+    CreateFile ( fHandle , WINDIR ^ "java", ".jmfdir" );
+    WriteLine(fHandle, TARGETDIR);
+    CloseFile(fHandle);
+	
+    CopyFile("jmf.properties", "jmf.properties.orig");
+	
+    SRCDIR = OLDSRCDIR;
+    TARGETDIR = TARGET;
+
+  return 0;
+ end;
+
+
+///////////////////////////////////////////////////////////////////////////////
+//                                                                           //
+// Function: SetupRegistry                                                   //
+//                                                                           //
+//  Purpose: This function makes the registry entries for this setup.        //
+//                                                                           //
+///////////////////////////////////////////////////////////////////////////////
+function SetupRegistry()
+ STRING szRegSvr;
+ begin
+    RegDBSetDefaultRoot ( HKEY_CLASSES_ROOT );
+    RegDBSetKeyValueEx ( "\\JMStudio\\shell\\open\\command" , "" , REGDB_STRING , TARGETDIR ^ "bin" ^ "jmstudio.bat %1" , -1 );
+    RegDBSetDefaultRoot ( HKEY_LOCAL_MACHINE );
+    RegDBSetKeyValueEx ( "\\SOFTWARE\\Sun Microsystems, Inc.\\JMF", "LatestVersion", REGDB_STRING , "2.1.1e", -1 );
+    RegDBSetKeyValueEx ( "\\SOFTWARE\\Sun Microsystems, Inc.\\JMF\\2.1.1e", "JMFDir", REGDB_STRING , TARGETDIR, -1 );
+    return 0;
+ end;
+
+///////////////////////////////////////////////////////////////////////////////
+//
+// Function: SetupFolders
+//
+//  Purpose: This function creates all the folders and shortcuts for the
+//           setup.  This includes program groups and items for Windows 3.1.
+//
+///////////////////////////////////////////////////////////////////////////////
+function SetupFolders()
+    STRING szFolder;
+    STRING szBin;
+ begin
+    if (bWinNT) then
+        ProgDefGroupType ( PERSONAL );
+    endif;
+    szFolder = "Java Media Framework 2.1.1e";
+    szBin = TARGETDIR ^ "bin";
+    // SdSelectFolder ( "Select Program Folder" , "Select the folder to which the JMF icons are to be added" , szFolder );
+    CreateProgramFolder ( szFolder );
+    ShowProgramFolder ( szFolder , SW_SHOW );
+
+    AddFolderIcon ( szFolder , "Documentation" , TARGETDIR ^ "doc" ^ "readme.html" ,
+                    TARGETDIR , "" , 0 , "" , REPLACE );
+    // Add JMStudio
+    AddFolderIcon ( szFolder , "JMStudio", "\"" + szBin ^ "jmstudio.exe\" -jre " +
+    				szJavaVM, szBin,
+                    TARGETDIR ^ "bin" ^ "JMF.ico", 0, "", REPLACE );
+    // Add JMFCustomizer
+    AddFolderIcon ( szFolder , "JMF Customizer", "\"" + szBin ^ "jmfcustomizer.exe\" -jre " +
+    				szJavaVM, TARGETDIR ^ "lib",
+                    TARGETDIR ^ "bin" ^ "JMF.ico", 0, "", REPLACE );
+    // Add JMExport
+    //AddFolderIcon ( szFolder , "JMF Export", "\"" + szBin ^ "jmexport.bat\"", szBin,
+    //                TARGETDIR ^ "bin" ^ "JMF.ico", 0, "", REPLACE );
+
+    // Add JMF Registry
+    AddFolderIcon ( szFolder , "JMF Registry" , "\"" + szBin ^ "jmfregistry.exe\" -jre " +
+    				szJavaVM,
+                    szBin , TARGETDIR ^ "bin" ^ "JMF.ico" , 0 , "" , REPLACE );
+    // Add JMStudio desktop icon
+    AddFolderIcon ( FOLDER_DESKTOP , "JMStudio" , "\"" + szBin ^ "jmstudio.exe\" -jre " +
+    				szJavaVM,
+                    szBin , TARGETDIR ^ "bin" ^ "JMF.ico" , 0 , "",
+		    REPLACE );
+
+    // Add JMF Uninstall icon
+    AddFolderIcon ( szFolder , "Uninstall JMF" , "IsUninst.exe -f" +
+		    TARGETDIR ^ "Uninst.isu",
+                    "" , "" , 0 , "", REPLACE );
+
+    ShowProgramFolder ( szFolder , SW_MINIMIZE );
+
+  return 0;
+ end;
+
+///////////////////////////////////////////////////////////////////////////////
+//                                                                           //
+// Function: CleanUpInstall                                                  //
+//                                                                           //
+//  Purpose: This cleans up the setup.  Anything that should                 //
+//           be released or deleted at the end of the setup should           //
+//           be done here.                                                   //
+//                                                                           //
+///////////////////////////////////////////////////////////////////////////////
+function CleanUpInstall()
+ begin
+
+
+  if (bInstallAborted) then
+      return 0;
+  endif;
+
+  DialogShowSdFinishReboot();
+
+  if (BATCH_INSTALL) then // ensure locked files are properly written
+     CommitSharedFiles(0);
+  endif;
+
+  return 0;
+ end;
+
+///////////////////////////////////////////////////////////////////////////////
+//                                                                           //
+// Function: SetupInstall                                                    //
+//                                                                           //
+//  Purpose: This will setup the installation.  Any general initialization   //
+//           needed for the installation should be performed here.           //
+//                                                                           //
+///////////////////////////////////////////////////////////////////////////////
+function SetupInstall()
+ begin
+
+  Enable( CORECOMPONENTHANDLING );
+
+  bInstallAborted = FALSE;
+
+  if (bIs32BitSetup) then
+     svDir = PROGRAMFILES ^ @PRODUCT_NAME + @PRODUCT_VERSION;
+  else
+     svDir = PROGRAMFILES ^ @PRODUCT_NAME16; // use shorten names
+  endif;
+
+  TARGETDIR  = svDir;
+  SdProductName( @PRODUCT_NAME );
+
+  Enable( DIALOGCACHE );
+
+  return 0;
+ end;
+
+///////////////////////////////////////////////////////////////////////////////
+//                                                                           //
+// Function:  SetupScreen                                                    //
+//                                                                           //
+//  Purpose:  This function establishes  the screen look.  This includes     //
+//            colors, fonts, and text to be displayed.                       //
+//                                                                           //
+///////////////////////////////////////////////////////////////////////////////
+function SetupScreen()
+ begin
+
+   Enable( FULLWINDOWMODE );
+   SetTitle( @TITLE_MAIN, 24, WHITE );
+
+   SetTitle( @TITLE_CAPTIONBAR, 0, BACKGROUNDCAPTION ); // Caption bar text.
+
+   Enable( BACKGROUND );
+
+   Delay( 1 );
+ end;
+
+///////////////////////////////////////////////////////////////////////////////
+//                                                                           //
+// Function:  CheckRequirements                                              //
+//                                                                           //
+//  Purpose:  This function checks all minimum requirements for the          //
+//            application being installed.  If any fail, then the user       //
+//            is informed and the setup is terminated.                       //
+//                                                                           //
+///////////////////////////////////////////////////////////////////////////////
+function CheckRequirements()
+   NUMBER  nvDx, nvDy, nvResult;
+   STRING  svResult;
+
+begin
+
+   bWinNT           = FALSE;
+   bIsShellExplorer = FALSE;
+
+   // Check screen resolution.
+   GetExtents(nvDx, nvDy );
+
+   if (nvDy < 480) then
+      MessageBox( @ERROR_VGARESOLUTION, WARNING );
+      abort;
+   endif;
+
+   // set 'setup' operation mode
+   bIs32BitSetup = TRUE;
+   GetSystemInfo( ISTYPE, nvResult, svResult );
+   if (nvResult = 16) then
+     bIs32BitSetup = FALSE; // running 16-bit setup
+     return 0; // no additional information required
+   endif;
+
+   // --- 32-bit testing after this point ---
+
+   // Determine the target system's operating system.
+   GetSystemInfo( OS, nvResult, svResult );
+
+   if (nvResult =  IS_WINDOWSNT) then
+      // Running Windows NT.
+      bWinNT = TRUE;
+
+      // Check to see if the shell being used is EXPLORER shell.
+      if (GetSystemInfo( OSMAJOR, nvResult, svResult ) = 0) then
+         if (nvResult >= 4) then
+            bIsShellExplorer = TRUE;
+         endif;
+      endif;
+
+   elseif (nvResult = IS_WINDOWS95 ) then
+      bIsShellExplorer = TRUE;
+
+   endif;
+
+end;
+
+
+///////////////////////////////////////////////////////////////////////////////
+//                                                                           //
+// Function: DialogShowSdLicense                                             //
+//                                                                           //
+//  Purpose: This function displays the license agreement dialog.            //
+//                                                                           //
+//                                                                           //
+///////////////////////////////////////////////////////////////////////////////
+function DialogShowSdLicense()
+  NUMBER nResult;
+  STRING szTitle, szMsg, szQuestion, szLicenseFile;
+ begin
+
+  szLicenseFile = SUPPORTDIR ^ "license.txt";
+  szTitle    = "";
+  szMsg      = "";
+  szQuestion = "";
+  nResult    = SdLicense( szTitle, szMsg, szQuestion, szLicenseFile );
+
+  return nResult;
+ end;
+
+
+///////////////////////////////////////////////////////////////////////////////
+//                                                                           //
+// Function: DialogShowSdAskDestPath                                         //
+//                                                                           //
+//  Purpose: This function asks the user for the destination directory.      //
+//                                                                           //
+///////////////////////////////////////////////////////////////////////////////
+function DialogShowSdAskDestPath()
+  NUMBER nResult;
+  STRING szTitle, szMsg;
+ begin
+
+  szTitle = "";
+  szMsg   = "";
+  nResult = SdAskDestPath( szTitle, szMsg, svDir, 0 );
+
+  TARGETDIR = svDir;
+
+  return nResult;
+ end;
+
+function UpdateMimeTypes( )
+    STRING szExt, szContent;
+begin
+    RegDBSetDefaultRoot ( HKEY_CLASSES_ROOT );
+    RegDBSetKeyValueEx ( "\\.rmf" , "Content Type" , REGDB_STRING , "audio/rmf" , -1 );
+    RegDBSetKeyValueEx ( "\\.mid" , "Content Type" , REGDB_STRING , "audio/midi" , -1 );
+    RegDBSetKeyValueEx ( "\\.midi" , "Content Type" , REGDB_STRING , "audio/midi" , -1 );
+    //RegDBSetKeyValueEx ( "\\.viv" , "Content Type" , REGDB_STRING , "video/vivo" , -1 );
+end;
+
+//////////////////////////////////////////////////////////////////////////////
+//                                                                          //
+//  Function: CopyFilesToNetscape                                           //
+//                                                                          //
+//////////////////////////////////////////////////////////////////////////////
+function CopyFilesToNetscape( szJavaDir , szPluginDir )
+    NUMBER nResult;
+    STRING OLDSRCDIR, OLDTARGETDIR;
+    STRING szTemp;
+begin
+    // Copy the dlls
+    OLDTARGETDIR = TARGETDIR;
+    OLDSRCDIR    = SRCDIR;
+    TARGETDIR = szJavaDir ^ "bin";
+    SRCDIR = OLDTARGETDIR ^ "lib";
+
+    XCopyFile ( "*.dll" , "" , COMP_NORMAL );
+
+    SRCDIR = TARGETDIR;
+
+    UpdateMimeTypes ();
+
+    SRCDIR = OLDSRCDIR;
+    TARGETDIR = OLDTARGETDIR;
+end;
+
+//////////////////////////////////////////////////////////////////////////////
+//                                                                          //
+//  Function: SetupNetscape                                                 //
+//                                                                          //
+//////////////////////////////////////////////////////////////////////////////
+function SetupNetscape()
+    STRING szPluginDir, szJavaDir;
+    STRING szNetscapeVersion;
+    NUMBER nResult;
+    NUMBER nvSize;
+    STRING szKey, szKey1, szKey2;
+    NUMBER nType;
+    STRING szJavaHome;
+begin
+    szKey = "Software\\Netscape\\Netscape Navigator";
+    RegDBSetDefaultRoot ( HKEY_LOCAL_MACHINE );
+    nResult = RegDBKeyExist ( szKey );
+    if (nResult = 1) then
+        RegDBGetKeyValueEx ( szKey , "CurrentVersion" , nType , szNetscapeVersion , nvSize );
+        if (StrCompare(szNetscapeVersion, "4.06") >= 0) then
+            szKey1 = szKey + "\\" + szNetscapeVersion + "\\Main";
+            RegDBGetKeyValueEx ( szKey1 , "Java Directory" , nType , szJavaDir , nvSize );
+            RegDBGetKeyValueEx ( szKey1 , "Plugins Directory" , nType , szPluginDir , nvSize );
+            if (nvSize > 5) then
+                CopyFilesToNetscape(szJavaDir, szPluginDir);
+            endif;
+        endif;
+    endif;
+    // Check for Netscape 6 and install JMF into Java Plug-in 1.3.0_01
+    RegDBSetDefaultRoot ( HKEY_LOCAL_MACHINE );
+    szKey = "Software\\Netscape\\Netscape 6";
+    nResult = RegDBKeyExist(szKey);
+    if (nResult = 1) then
+	szKey = "Software\\JavaSoft\\Java Plug-in\\1.3.0_01";
+	RegDBGetKeyValueEx(szKey, "JavaHome", nType, szJavaHome, nvSize);
+	if (nvSize > 1) then
+	    nvJDK12 = TRUE;
+	    CopyFilesToJDKExt(szJavaHome);
+	endif;
+    endif;
+end;
+
+//////////////////////////////////////////////////////////////////////////////
+//                                                                          //
+//  Function: CopyFilesToJDKExt                                             //
+//                                                                          //
+//////////////////////////////////////////////////////////////////////////////
+function CopyFilesToJDKExt( szJREHome )
+    NUMBER nResult;
+    STRING OLDSRCDIR, OLDTARGETDIR;
+    STRING szTemp;
+begin
+    if (nvJDK12 = FALSE) then
+		return;
+    endif;
+    // Copy the dlls, jars, properties and soundbank
+    OLDTARGETDIR = TARGETDIR;
+    OLDSRCDIR    = SRCDIR;
+    TARGETDIR = szJREHome ^ "lib" ^ "ext";
+    SRCDIR = OLDTARGETDIR ^ "lib";
+
+    // For Signed JAR file
+    XCopyFile ( "jmf.jar" , "" , COMP_NORMAL );
+    XCopyFile ( "sound.jar" , "" , COMP_NORMAL );
+
+    SRCDIR = OLDSRCDIR;
+    TARGETDIR = OLDTARGETDIR;
+end;
+
+
+//////////////////////////////////////////////////////////////////////////////
+//                                                                          //
+//  Function: SetupJDK12                                                 //
+//                                                                          //
+//////////////////////////////////////////////////////////////////////////////
+function SetupJDK12()
+    STRING szJreHome;
+    NUMBER nResult;
+    NUMBER nvSize;
+    STRING szCurrentVersion;
+    STRING szKeyCV, szKey1, szKey2;
+    STRING szBase;
+    NUMBER nType;
+    STRING szIsJview, szJViewDir;
+begin
+    szJavaHome = WINDIR ^ "Java";
+	if (bWinNT) then
+		szJViewDir = WINDIR ^ "System32";
+	else
+		szJViewDir = WINDIR;
+	endif;
+	
+	FindFile ( szJViewDir , "wjview.exe" , szIsJview );
+	if (StrCompare(szIsJview,  "wjview.exe") = 0) then
+		szJavaVM = "wjview.exe";
+	else
+		szJavaVM = "javaw.exe";
+	endif;
+	
+    bJRE = FALSE;
+    bJVIEW = TRUE;
+    szBase = "Software\\JavaSoft\\Java Development Kit";
+    RegDBSetDefaultRoot ( HKEY_LOCAL_MACHINE );
+    nResult = RegDBKeyExist ( szBase );
+    if (nResult = 1) then
+        // Get the current version
+        RegDBGetKeyValueEx ( szBase, "CurrentVersion", nType,
+                             szCurrentVersion, nvSize );
+        szKey1 = szBase + "\\" + szCurrentVersion;
+        // Look for the JRE directory under the JDK
+        RegDBGetKeyValueEx ( szKey1 , "JavaHome" , nType , szJavaHome , nvSize );
+        LongPathToShortPath (szJavaHome);
+        szJreHome = szJavaHome ^ "jre";
+
+        if (ExistsDir ( szJavaHome ) == EXISTS ) then
+            bJVIEW = FALSE;
+            if (StrCompare(szCurrentVersion, "1.2") >= 0) then
+               CopyFilesToJDKExt( szJreHome );
+               szJavaVM = szJreHome ^ "bin" ^ "javaw.exe";
+               szJavaHome = szJreHome;
+            else
+               szJavaVM = szJavaHome ^ "bin" ^ "javaw.exe";
+            endif;
+        endif;
+    endif;
+
+    szBase = "Software\\JavaSoft\\Java Runtime Environment";
+    nResult = RegDBKeyExist ( szBase );
+    if (nResult = 1) then
+        // Get the current version
+        RegDBGetKeyValueEx ( szBase, "CurrentVersion", nType,
+                             szCurrentVersion, nvSize );
+        szKey2 = szBase + "\\" + szCurrentVersion;
+        RegDBGetKeyValueEx ( szKey2 , "JavaHome" , nType ,
+                             szJreHome , nvSize );
+        LongPathToShortPath(szJreHome);
+        if (ExistsDir ( szJreHome ) == EXISTS ) then
+            bJVIEW = FALSE;
+            if (StrCompare(szCurrentVersion, "1.2") >= 0) then
+                if (szJavaHome != szJreHome) then
+                    CopyFilesToJDKExt( szJreHome );
+                endif;
+                szJavaHome = szJreHome;
+                if (StrCompare(szJavaVM, "wjview.exe") = 0) then
+                    szJavaVM = szJreHome ^ "bin" ^ "javaw.exe";
+		endif;
+            else
+                if (StrCompare(szJavaVM, "wjview.exe") = 0) then
+                    szJavaVM = szJreHome ^ "bin" ^ "jrew.exe";
+                    bJRE = TRUE;
+		endif;
+            endif;
+        endif;
+    endif;
+end;
+
+
+// Function : MoveFilesToWinDir
+function MoveFilesToWinDir()
+	STRING svSourceLib;
+	STRING svDestClasses;
+	STRING OLDTARGET, OLDSRC;
+begin
+	OLDTARGET = TARGETDIR;
+	OLDSRC    = SRCDIR;
+	
+	SRCDIR = OLDTARGET ^ "lib";
+	
+	// Copy the DLLs
+	TARGETDIR = WINSYSDIR;
+	CopyFile ( "*.dll" , "" );
+
+	// Delete the lib directory
+	TARGETDIR = SRCDIR;
+	DeleteFile ( "*.dll" );
+
+	SRCDIR = OLDSRC;
+	TARGETDIR = OLDTARGET;	
+end;
+
+///////////////////////////////////////////////////////////////////////////////
+//                                                                           //
+// Function: DialogShowSdFinishReboot                                        //
+//                                                                           //
+//  Purpose: This function will show the last dialog of the product.         //
+//           It will allow the user to reboot and/or show some readme text.  //
+//                                                                           //
+///////////////////////////////////////////////////////////////////////////////
+function DialogShowSdFinishReboot()
+  NUMBER nResult, nDefOptions;
+  STRING szTitle, szMsg1, szMsg2, szOption1, szOption2;
+  NUMBER bOpt1, bOpt2;
+  NUMBER bvOpt1, bvOpt2, nvSize;
+  STRING svPath, svClass;
+  NUMBER nvType;
+  STRING svLibrary;
+  STRING svJMFJar;
+  STRING svSoundJar;
+  STRING svWinClasses;
+  STRING OLDTARGET, OLDSRC;
+  STRING svResult;
+
+ begin
+
+    // Added for 1.0.2
+    SetupJDK12();
+    // Added for 1.0 Beta3
+    if (nvNetscape = TRUE) then
+    	SetupNetscape();
+    endif;
+	// Move the runtime files to WINDIR and remove lib directory
+	if (nvMoveToWin = TRUE) then
+	    MoveFilesToWinDir();
+	endif;
+
+	SetupFolders();
+		
+    InitializeJMF();
+
+
+    Disable(LOGGING);
+    nResult = 0;
+
+    svWinClasses = TARGETDIR ^ "lib";
+    svJMFJar     = svWinClasses ^ "jmf.jar;" ;
+    svSoundJar   = svWinClasses ^ "sound.jar;";
+
+    if (nvUpdatePaths) then
+	// Update Windows Registry for MS VM classpath
+    	RegDBSetDefaultRoot ( HKEY_LOCAL_MACHINE );
+    	RegDBGetKeyValueEx ( "SOFTWARE\\Microsoft\\Java VM",
+                             "Classpath", nvType, svClass, nvSize );
+    	if (svClass % svJMFJar) then
+    	else
+	    svClass = svJMFJar + svWinClasses + ";" + svClass;
+    	endif;
+    	if (svClass % svSoundJar) then
+    	else
+	    svClass = svSoundJar + svClass;
+    	endif;
+	svClass = ".;" + svClass;
+
+    	RegDBSetKeyValueEx ( "SOFTWARE\\Microsoft\\Java VM",
+                             "Classpath", REGDB_STRING, svClass, -1 );
+
+        // For windows NT, update the registry for general CLASSPATH
+        if (bWinNT) then
+            // Change the default base key
+            RegDBSetDefaultRoot ( HKEY_CURRENT_USER );
+            if (nvMoveToWin = FALSE) then
+            	// Prepend the 'lib' directory to the PATH
+            	RegDBGetKeyValueEx ( "Environment" , "PATH" ,
+            	                     nvType , svPath , nvSize );
+            	PathSet ( svPath );
+            	if ( svPath % svWinClasses ) then
+            	else
+	           		svPath = svWinClasses + ";" + svPath;
+            		RegDBSetKeyValueEx ( "Environment" , "PATH" ,
+            		                     REGDB_STRING ,
+            						 	 svPath , -1 );
+            	endif;
+            endif;
+ 			// Get the CLASSPATH
+            RegDBGetKeyValueEx ( "Environment" , "CLASSPATH" , nvType , svClass , nvSize );
+            if ( svClass % svJMFJar ) then
+            else
+	           	svClass = svJMFJar + svWinClasses + ";" + svClass;
+            endif;
+            if ( svClass % svSoundJar ) then
+            else
+	           	svClass = svSoundJar + svClass;
+            endif;
+	    svClass = ".;" + svClass;
+            RegDBSetKeyValueEx ( "Environment" , "CLASSPATH" , REGDB_STRING , svClass , -1 );
+            // Reboot
+            nResult = SdFinishReboot( "", "", SYS_BOOTMACHINE, "", 0);
+        endif;
+
+        // For windows 95, update the AUTOEXEC.BAT
+        if (!bWinNT) then
+            if (nvMoveToWin = FALSE) then
+	           	EzBatchAddPath ( "PATH" , svWinClasses , "" , BEFORE );
+            endif;
+            EzBatchAddPath ( "CLASSPATH", svWinClasses ^ "jmf.jar" , "", BEFORE );
+            EzBatchAddPath ( "CLASSPATH", svWinClasses, "", BEFORE );
+            EzBatchAddPath ( "CLASSPATH", svWinClasses ^ "sound.jar" , "" , BEFORE );
+	    EzBatchAddPath ( "CLASSPATH", "." , "" , BEFORE );
+            nResult = SdFinishReboot( "", "", SYS_BOOTMACHINE, "", 0);
+        endif;
+    endif;
+    Enable(LOGGING);
+    return nResult;
+ end;
+
+ // --- include script file section ---
+
+#include "sddialog.rul"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

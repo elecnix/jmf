@@ -1,0 +1,15 @@
+#
+# @(#)sol_libjmopi.cmk	1.1 99/03/30
+# Copyright 1998 Sun Microsystems, Inc.
+#
+
+SOURCES_cc = \
+	$(OBJDIR)\OPICapture.cc \
+	$(OBJDIR)\jopiCapture.cc
+
+STUBS_NAMES = \
+	com.sun.media.protocol.sunvideoplus.OPICapture
+
+STUBS_CLASSES = \
+	$(TARGDIR)com/sun/media/protocol/sunvideoplus/OPICapture.class
+

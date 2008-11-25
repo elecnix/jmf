@@ -1,0 +1,138 @@
+<HTML>
+<HEAD>
+   <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+   <META NAME="Description" CONTENT="Describes how to use the JMFSamleApp application in JMF 2.0 for playback, transcoding and capture">
+   <META NAME="KeyWords" CONTENT="JMF">
+   <META NAME="GENERATOR" CONTENT="Mozilla/4.04 [en] (Win95; I) [Netscape]">
+   <META NAME="Author" CONTENT="Dror Gill">
+   <TITLE>JMFRegistry User's Guide</TITLE>
+</HEAD>
+<BODY TEXT="#000000" BGCOLOR="#FFFFFF" LINK="#0000EE" VLINK="#800080" ALINK="#FF0000">
+<FONT FACE="Arial, Helvetica">
+<H2>JMFRegistry User's Guide</h2>
+<p>
+This guide describes how to use JMFRegistry. JMFRegistry is a stand alone Java application that
+you can use to register new DataSources, MediaHandlers, PlugIns, and capture devices with JMF so that they can be used with your JMF 2.0 installation. JMFRegistry also enables you to rearrange the search orders and remove registered extensions. 
+
+<p><A NAME="prefixes"></A>
+<TABLE BORDER=0 COLS=1 WIDTH="100%" BGCOLOR="#FFCC33" NOSAVE >
+<TR>
+<TD><FONT FACE="Arial,Helvetica"><FONT SIZE=+2>Registering Package Prefixes for New Protocols and Media Handlers</font></font>
+</table>
+<p>
+To use a custom DataSource or MediaHandler with JMF, you must register the package prefix that identifies where the new class is located. (For example, COM.yourbiz.) You can do this with JMFRegistry through the PackageManager tab. Package prefixes for new protocols and MediaHandlers are set separately in the protocol package-prefix list and the content package-prefix list. You can also  rearrange the order in which JMF searches installed protocol and media handlers, and remove registered package prefixes from the PackageManager tab.
+<p>
+<img src="regpm.gif">
+<p>
+For more information about how package prefixes are used to locate JMF extensions, see the "Extending JMF" chapter in the JMF API Guide.
+<p>
+To add a package prefix to either the ProtocolPrefix List or ContentPrefix List:
+<ol>
+<li>Open the <B>PackageManager</B> tab in the JMFRegistry Editor window.
+<br>&nbsp;
+<li>Enter the new path in the ProtocolPrefixList text field.
+<br>&nbsp;
+<li>Click the <B>Add</B> button.
+<br>&nbsp;
+<li>To rearrange the search order, select the path you want to move and
+click the <B>Move Up</B> or <B>Move Down</B> button.
+<br>&nbsp;
+<li>Click the <B>Commit</B> button to save your changes. Clicking the <B>Restore</B> button will
+revert to the last saved prefix list.   
+</ol>
+<p>
+To remove a package prefix from either the ProtocolPrefix List or ContentPrefix List:
+<ol>
+<li>Open the <B>PackageManager</B> tab in the JMFRegistry Editor window.
+<br>&nbsp;
+<li>Select the search path you want to remove.
+<br>&nbsp;
+<li>Click the <B>Remove</B> button
+<br>&nbsp;
+<li>Click the <B>Commit</B> button to save your changes. Clicking the Restore button will
+revert to the last saved prefix list.   
+</ol>
+<p><A NAME="plugins"></A>
+<TABLE BORDER=0 COLS=1 WIDTH="100%" BGCOLOR="#FFCC33" NOSAVE >
+<TR>
+<TD><FONT FACE="Arial,Helvetica"><FONT SIZE=+2>Registering New Plug-Ins</font></font>
+</table>
+<p>
+To use a custom PlugIn with JMF, you must register it with the PlugInManager. You can do this with JMFRegistry through the PlugInManager tab. You can also  view the input and/or output formats of a registered plug-in, rearrange the order in which JMF queries plug-ins, and remove registered plug-ins from the PlugInManager tab.
+<p>
+<img src="regpim.gif">
+<p>
+To register a new plug-in:
+<ol>
+<li>Open the PlugInManager tab in the JMF Registry Editor.
+<br>&nbsp;
+<li>Select the tab for the type of plug-in you are adding. (Demultiplexer, Codec,
+Effect, Renderer, or Multiplexer.)
+<br>&nbsp;
+<li>Enter the plug-in's fully qualified class name in the plug-in text field.
+<br>&nbsp;
+<li>Click the Add button.
+<br>&nbsp;
+<li>To rearrange the plug-in search order, select the plug-in you want to move and
+click the Move Up or Move Down button.
+<br>&nbsp;
+<li>Click the Commit button to save your changes. Clicking the Restore button will
+revert to the last saved plug-in list.  
+</ol>
+
+<p>
+To remove a plug-in:
+<ol>
+<li>Open the PlugInManager tab in the JMFRegistry Editor window.
+<br>&nbsp;
+<li>Select the plug-in you want to remove.
+<br>&nbsp;
+<li>Click the Remove button
+<br>&nbsp;
+<li>Click the Commit button to save your changes. Clicking the Restore button will
+revert to the last saved plug-in list.  
+</ol>
+
+<p><A NAME="capturedevs"></A>
+<TABLE BORDER=0 COLS=1 WIDTH="100%" BGCOLOR="#FFCC33" NOSAVE >
+<TR>
+<TD><FONT FACE="Arial,Helvetica"><FONT SIZE=+2>Registering New Capture Devices with JMF</font></font>
+</table><p>
+<p>
+To use a particular capture device with JMF, you must register it with the CaptureDeviceManager. You can do this with JMFRegistry through the CaptureDeviceManager tab. You can also  rearrange the order in which JMF queries capture devices, and remove registered devices from the CaptureDeviceManager tab.
+<p>
+<img src="regcdm.gif">
+<p>
+To register a new capture device:
+<ol>
+<li>Open the CaptureDeviceManager tab in the JMF Registry Editor.
+<br>&nbsp;
+<li>Enter the capture device in the capture devices text field.
+<br>&nbsp;
+<li>Click the Add button.
+<br>&nbsp;
+<li>To rearrange the capture device search order, select the device you want to move and
+click the Move Up or Move Down button.
+<br>&nbsp;
+<li>Click the Commit button to save your changes. Clicking the Restore button will
+revert to the last saved capture device list.   
+</ol>
+
+To remove a capture device:
+
+<ol>
+<li>Open the CaptureDeviceManager tab in the JMFRegistry Editor window.
+<br>&nbsp;
+<li>Select the capture device you want to remove.
+<br>&nbsp;
+<li>Click the Remove button
+<br>&nbsp;
+<li>Click the Commit button to save your changes. Clicking the Restore button will
+revert to the last saved capture device list.   
+</ol>
+
+<P>
+<HR><FONT SIZE=-2>Copyright &copy; 1995-99 Sun Microsystems, Inc.</FONT>
+<BR><FONT SIZE=-2>All Rights Reserved</FONT>
+</BODY>
+</HTML>

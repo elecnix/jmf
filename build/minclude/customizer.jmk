@@ -1,0 +1,29 @@
+#
+# @(#)customizer.jmk	1.2 00/02/25
+# Copyright 1998-2000 Sun Microsystems
+# 
+
+SOURCES_java = \
+	$(TARGDIR)CusRegistry.java \
+	$(TARGDIR)JMFCustomizer.java \
+	$(TARGDIR)TokenDef.java \
+	$(TARGDIR)DBItem.java \
+	$(TARGDIR)CustomDB.java \
+	$(TARGDIR)I18N.java \
+	$(TARGDIR)Props.java \
+	$(TARGDIR)ProgressDiag.java \
+	$(TARGDIR)ProcessJAR.java \
+	$(TARGDIR)GeneralPane.java \
+	$(TARGDIR)ProtocolPane.java \
+	$(TARGDIR)MFormatPane.java \
+	$(TARGDIR)I18N.java \
+	$(TARGDIR)Props.java \
+	$(TARGDIR)ProgressDiag.java \
+	$(TARGDIR)ProcessJAR.java \
+	$(TARGDIR)GeneralPane.java \
+	$(TARGDIR)ProtocolPane.java \
+	$(TARGDIR)CodecPane.java \
+	$(TARGDIR)RendererPane.java \
+	$(TARGDIR)MuxPane.java \
+	$(TARGDIR)Customizer.java \
+	$(TARGDIR)HelperDiag.java 

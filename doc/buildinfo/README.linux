@@ -1,0 +1,28 @@
+This document pertains to the current status of the Linux port of JMF
+
+-------------------------------------------------------------------------------
+6/16/2000 - Amith Yamasani (amith@sun.com)
+
+- Only tested for Linux x86 on stock RedHat 6.1 (2.2.12-20)
+- All java code works fine without modifications
+- All native decoders and encoders work fine, except for...
+- Vivo H.263 native decoder crashes on Linux x86. Its got to be some
+  #ifdef issue since the same code works fine on Win32 and Solaris SPARC
+  Building of the decoder is currently conditional
+  Set the COMPILE_VH263 env. variable to some value to force compilation
+- Video 4 Linux wrapper is incomplete:
+	- No frame rate control or accurate time-stamping of video frames
+	- No custom GUI
+	- Sometimes the card starts up in the wrong NORM - Say PAL instead of
+          NTSC.
+	- Only mmap mode transfers work. read mode is not properly implemented.
+	- VIDIOCSWIN is not used, probably need to use this to set size
+	- Detection code is slow because it tries to grab a frame for
+           every mode it tries. Could be hardcoded based on driver?
+	- Red and Blue is flipped when grabbing 24 bit RGB. Wrong assumption?
+- Could use a faster video rendering plugin - XLibRenderer is decent, but
+  not too good for scaling or high frame rate video.
+
+Not aware of any other obvious problems with the port.
+-------------------------------------------------------------------------------
+

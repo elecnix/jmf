@@ -1,0 +1,15 @@
+#
+# @(#)win32_libgdi.cmk	1.2 98/08/20
+#
+
+SOURCES_cc = \
+	$(OBJDIR)\GDIRenderer.cc
+
+STUBS_NAMES = \
+	com.sun.media.renderer.video.GDIRenderer
+
+STUBS_CLASSES = \
+	$(TARGDIR)com/sun/media/renderer/video/GDIRenderer.class
+
+
+

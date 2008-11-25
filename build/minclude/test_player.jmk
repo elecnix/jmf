@@ -1,0 +1,53 @@
+#
+# @(#)test_player.jmk	1.10 99/05/05
+# Copyright 1998-1999 Sun Microsystems
+# 
+
+SOURCES_java = \
+	$(TARGDIR)rtp/RTPUtil.java \
+	$(TARGDIR)rtp/RTPDialog.java \
+	$(TARGDIR)rtp/ParticipantListWindow.java \
+	$(TARGDIR)rtp/OverallStatsWindow.java \
+	$(TARGDIR)rtp/SDESWindow.java \
+	$(TARGDIR)rtp/SenderReportWindow.java \
+	$(TARGDIR)rtp/RTCPFeedbackWindow.java \
+	$(TARGDIR)rtp/RTPParticipantWindow.java \
+	$(TARGDIR)rtp/RTPStatsWindow.java \
+	$(TARGDIR)rtp/RTPStreamWindow.java \
+	$(TARGDIR)rtp/ReceiverReportWindow.java \
+	$(TARGDIR)rtp/RTPSendStreamWindow.java \
+	$(TARGDIR)rtp/OverallTransStatsWindow.java \
+	$(TARGDIR)JMStudio.java \
+	$(TARGDIR)SnapFrame.java \
+	$(TARGDIR)Export.java \
+	$(TARGDIR)CaptureDialog.java \
+	$(TARGDIR)CaptureControlsDialog.java \
+	$(TARGDIR)RTPPlayerApplet.java \
+	$(TARGDIR)RTPServerApplet.java \
+	$(TARGDIR)RTPSocketPlayer.java \
+	$(TARGDIR)SimplePlayerApplet.java \
+	$(TARGDIR)SaveAsDialog.java \
+	$(TARGDIR)SaveAsAudioPanel.java \
+	$(TARGDIR)SaveAsVideoPanel.java \
+	$(TARGDIR)AboutDialog.java \
+	$(TARGDIR)MessageDialog.java \
+	$(TARGDIR)ProgressDialog.java \
+	$(TARGDIR)BorderedPanel.java \
+        $(TARGDIR)WizardDialog.java \
+        $(TARGDIR)ExportWizard.java \
+	$(TARGDIR)TransmitWizard.java \
+        $(TARGDIR)PanelMediaSource.java \
+        $(TARGDIR)PanelMediaTargetType.java \
+        $(TARGDIR)PanelMediaTargetFormat.java \
+        $(TARGDIR)PanelMediaTargetFile.java \
+        $(TARGDIR)PanelMediaTargetNetwork.java \
+        $(TARGDIR)ImageArea.java \
+	$(TARGDIR)TextView.java \
+        $(TARGDIR)ProgressThread.java \
+	$(TARGDIR)JMStudioCfg.java
+
+#	$(TARGDIR)ComboBox.java \
+#	$(TARGDIR)HttpMixer.java \
+#	$(TARGDIR)Mixer.java \
+#	$(TARGDIR)MDIApp.java \
+#	$(TARGDIR)TestPlayer.java \

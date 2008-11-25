@@ -1,0 +1,16 @@
+#
+# @(#)libh261.cmk	1.2 99/09/07
+#
+SOURCES_cc = \
+	$(OBJDIR)\dct.cc \
+	$(OBJDIR)\H261Decoder.cc
+
+SOURCES_c = \
+	$(OBJDIR)\bv.c \
+	$(OBJDIR)\huffcode.c \
+
+STUBS_NAMES = \
+	com.sun.media.codec.video.h261.NativeDecoder
+
+STUBS_CLASSES = \
+	$(TARGDIR)com/sun/media/codec/video/h261/NativeDecoder.class

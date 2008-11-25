@@ -1,0 +1,5 @@
+
+if (! $?CLASSPATH) setenv CLASSPATH .
+
+setenv JMFHOME `workspace name`
+setenv CLASSPATH ${CLASSPATH}:.:${JMFHOME}/build/solaris/lib:/net/quad/export/home/swing11/swingall.jar

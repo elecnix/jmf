@@ -1,0 +1,38 @@
+#
+# @(#)win32_com_sun_media.jmk	1.28 03/04/25
+#
+
+SOURCES_java = $(SOURCES_java) \
+	$(TARGDIR)BuildInfo.java \
+	$(TARGDIR)util\Arch.java \
+	$(TARGDIR)renderer\audio\DirectAudioRenderer.java \
+	$(TARGDIR)renderer\video\DDRenderer.java \
+	$(TARGDIR)renderer\video\GDIRenderer.java \
+	$(TARGDIR)vfw\WaveFormatEx.java \
+	$(TARGDIR)protocol\vfw\CapStatus.java \
+	$(TARGDIR)protocol\vfw\CapDriverCaps.java \
+	$(TARGDIR)protocol\vfw\CaptureParms.java \
+	$(TARGDIR)protocol\vfw\VFWCapture.java \
+	$(TARGDIR)amovie\MCI.java \
+	$(TARGDIR)content\audio\cdaudio\Handler.java \
+	$(TARGDIR)protocol\vfw\VFWDeviceQuery.java \
+	$(TARGDIR)protocol\vfw\DataSource.java \
+	$(TARGDIR)protocol\vfw\VFWSourceStream.java \
+	$(TARGDIR)protocol\dsound\DSound.java \
+	$(TARGDIR)protocol\dsound\DSoundST.java \
+	$(TARGDIR)protocol\dsound\DataSource.java \
+	$(TARGDIR)protocol\dsound\DirectSoundStream.java \
+	$(TARGDIR)codec\video\vcm\ICInfo.java \
+	$(TARGDIR)codec\video\vcm\VCM.java \
+	$(TARGDIR)codec\video\vcm\NativeDecoder.java \
+	$(TARGDIR)codec\video\vcm\NativeEncoder.java \
+	$(TARGDIR)amovie\ActiveMovie.java \
+	$(TARGDIR)amovie\VisualComponent.java \
+	$(TARGDIR)amovie\MSVisualComponent.java \
+	$(TARGDIR)amovie\jdk12CreateThreadAction.java \
+	$(TARGDIR)amovie\AMController.java \
+	$(TARGDIR)content\video\mpeg\Handler.java \
+	$(TARGDIR)content\audio\mpeg\Handler.java
+
+#	$(TARGDIR)content\video\mpeg\Handler.java \
+

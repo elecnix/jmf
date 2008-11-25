@@ -1,0 +1,71 @@
+#
+# @(#)jmapps.jmk	1.7 00/08/30
+# Copyright 2000 Sun Microsystems, Inc.
+# 
+
+SOURCES_java = \
+	$(TARGDIR)jmapps/registry/MimePanel.java \
+	$(TARGDIR)jmapps/registry/CDMPanel.java \
+	$(TARGDIR)jmapps/registry/VectorPanel.java \
+	$(TARGDIR)jmapps/registry/PIMPanel.java \
+	$(TARGDIR)jmapps/registry/PMPanel.java \
+	$(TARGDIR)jmapps/registry/SettingsPanel.java \
+	$(TARGDIR)jmapps/registry/PerTypePanel.java \
+	$(TARGDIR)jmapps/registry/VectorEditor.java \
+	$(TARGDIR)jmapps/ui/ImageArea.java \
+	$(TARGDIR)jmapps/ui/JMDialog.java \
+	$(TARGDIR)jmapps/ui/JMFrame.java \
+	$(TARGDIR)jmapps/ui/JMPanel.java \
+	$(TARGDIR)jmapps/ui/MessageDialog.java \
+	$(TARGDIR)jmapps/ui/PlayerFrame.java \
+	$(TARGDIR)jmapps/ui/PopupWait.java \
+	$(TARGDIR)jmapps/ui/ProgressBar.java \
+	$(TARGDIR)jmapps/ui/ProgressDialog.java \
+	$(TARGDIR)jmapps/ui/ProgressThread.java \
+	$(TARGDIR)jmapps/ui/SnapFrame.java \
+	$(TARGDIR)jmapps/ui/TextView.java \
+	$(TARGDIR)jmapps/ui/TrackPanel.java \
+	$(TARGDIR)jmapps/ui/TrackPanelAudio.java \
+	$(TARGDIR)jmapps/ui/TrackPanelVideo.java \
+	$(TARGDIR)jmapps/ui/VideoPanel.java \
+	$(TARGDIR)jmapps/ui/WizardDialog.java \
+        $(TARGDIR)jmapps/ui/TreeNode.java \
+        $(TARGDIR)jmapps/ui/TreeControl.java \
+	$(TARGDIR)jmapps/jmstudio/CaptureDialog.java \
+	$(TARGDIR)jmapps/jmstudio/AboutDialog.java \
+	$(TARGDIR)jmapps/jmstudio/CaptureControlsDialog.java \
+	$(TARGDIR)jmapps/jmstudio/OpenRtpDialog.java \
+	$(TARGDIR)jmapps/jmstudio/OpenUrlDialog.java \
+	$(TARGDIR)jmapps/jmstudio/SaveAsDialog.java \
+	$(TARGDIR)jmapps/jmstudio/TransmitWizard.java \
+	$(TARGDIR)jmapps/util/JMAppsCfg.java \
+	$(TARGDIR)jmapps/util/StateHelper.java \
+	$(TARGDIR)jmapps/util/JMFUtils.java \
+	$(TARGDIR)jmapps/util/CDSWrapper.java \
+	$(TARGDIR)jmapps/export/ExportWizard.java \
+	$(TARGDIR)jmapps/export/PanelMediaTargetFormat.java \
+	$(TARGDIR)jmapps/export/PanelMediaSource.java \
+	$(TARGDIR)jmapps/export/PanelMediaTargetFile.java \
+	$(TARGDIR)jmapps/export/PanelMediaTargetNetwork.java \
+	$(TARGDIR)jmapps/export/PanelMediaTargetType.java \
+	$(TARGDIR)jmapps/export/TransmitPlayerWindow.java \
+	$(TARGDIR)jmapps/rtp/PanelOverallRtpStats.java \
+	$(TARGDIR)jmapps/rtp/SessionControlDialog.java \
+	$(TARGDIR)jmapps/rtp/TransmissionStatsDialog.java \
+        $(TARGDIR)jmapps/rtp/PanelParticipants.java \
+        $(TARGDIR)jmapps/rtp/ViewParticipantList.java \
+        $(TARGDIR)jmapps/rtp/ViewParticipantInfo.java \
+        $(TARGDIR)jmapps/rtp/ViewReceiverReport.java \
+        $(TARGDIR)jmapps/rtp/ViewSenderReport.java \
+        $(TARGDIR)jmapps/rtp/ViewReportBlock.java \
+        $(TARGDIR)jmapps/rtp/ViewRtpStreamInfo.java \
+        $(TARGDIR)jmapps/rtp/ViewSourceDescription.java \
+	$(TARGDIR)Export.java \
+	$(TARGDIR)SimplePlayerApplet.java \
+	$(TARGDIR)JMStudio.java \
+	$(TARGDIR)JMFInit.java \
+	$(TARGDIR)JavaSoundDetector.java \
+	$(TARGDIR)JavaSoundAuto.java \
+	$(TARGDIR)JMFRegistry.java \
+	
+
